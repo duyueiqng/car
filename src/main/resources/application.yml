@@ -24,12 +24,11 @@ spring:
 logging:
   level:
     root: error
-    com.mingzi: debug
+    com.zy: debug
 mybatis-plus:
   global-config:
     db-config:
       id-type: auto
-#      table-prefix: _
   mapper-locations: classpath:mapper/*Mapper.xml
 server:
   servlet:

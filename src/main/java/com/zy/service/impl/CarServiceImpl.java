@@ -1,8 +1,8 @@
 package com.zy.service.impl;
 
-import com.mingzi.mapper.CarMapper;
-import com.mingzi.pojo.Car;
-import com.mingzi.service.CarService;
+import com.zy.mapper.CarMapper;
+import com.zy.pojo.Car;
+import com.zy.service.CarService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
