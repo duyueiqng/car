@@ -24,7 +24,7 @@ spring:
 logging:
   level:
     root: error
-    com.mingzi: debug
+    com.zy: debug
 mybatis-plus:
   global-config:
     db-config:

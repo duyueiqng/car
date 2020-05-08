@@ -1,9 +1,14 @@
 package com.zy.service.impl;
 
-import com.mingzi.mapper.CarMapper;
-import com.mingzi.pojo.Car;
-import com.mingzi.service.CarService;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.zy.mapper.CarMapper;
+import com.zy.pojo.Car;
+import com.zy.service.CarService;
+import com.zy.vo.CarVo;
+import com.zy.vo.PageResult;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -21,5 +26,50 @@ public class CarServiceImpl implements CarService {
     @Override
     public List<Car> selectByList() {
         return carMapper.selectByList();
+    }
+
+    @Override
+    public PageResult findAll(Integer pageNo, Integer pageSize, CarVo carVo) {
+        LambdaQueryWrapper<Car> query=new LambdaQueryWrapper<>();
+
+//        query.like(!StringUtils.isEmpty(userVo.getUserCode()),User::getUserCode,userVo.getUserCode())
+//                .eq(userVo.getUserRole()!=null,User::getUserRole,userVo.getUserRole())
+//                .ge(userVo.getStartDate()!=null,User::getBirthday,userVo.getStartDate())
+//                .le(userVo.getEndDate()!=null,User::getBirthday,userVo.getEndDate());
+
+        //进行判断条件查询的条件是否为空
+        query.like(!StringUtils.isEmpty(carVo.getCarNumber()),Car::getCarNumber,carVo.getCarNumber())
+                .like(!StringUtils.isEmpty(carVo.getCarColor()),Car::getCarColor,carVo.getCarColor())
+                .like(!StringUtils.isEmpty(carVo.getCarType()),Car::getCarType,carVo.getCarType());
+
+        //封装分页查询
+        Page page = new Page(pageNo,pageSize);
+        List<Car> list = carMapper.findAll(page,query);
+
+        return new PageResult(list,page.getTotal());
+
+    }
+
+    /**
+     * 添加
+     * @param car
+     */
+    @Override
+    public void doAdd(Car car) {
+        carMapper.insert(car);
+    }
+
+    /**
+     * 修改
+     * @param car
+     */
+    @Override
+    public void doUpdate(Car car) {
+        carMapper.updateById(car);
+    }
+
+    @Override
+    public void del(Integer id) {
+        carMapper.deleteById(id);
     }
 }

@@ -1,6 +1,7 @@
 package com.zy.pojo;
 
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
 @Data
@@ -54,6 +55,7 @@ public class Car {
 	/**
 	 * 创建时间
 	 */
+	@JsonFormat(pattern = "yyyy-MM-dd HH:mm")
 	private java.time.LocalDateTime createtime;
 
 

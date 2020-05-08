@@ -7,4 +7,8 @@
     <select id="selectByList" resultType="com.zy.pojo.Car">
         select * from car
     </select>
+
+    <select id="findAll" resultType="com.zy.pojo.Car">
+        select * from car ${ew.customSqlSegment}
+    </select>
 </mapper>
