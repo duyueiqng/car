@@ -1,0 +1,14 @@
+.ivu-page{
+    margin-top: 12px;
+    text-align: center;
+}
+.ivu-page-prev a i,.ivu-page-next a i{
+    margin-top: 6px;
+}
+.img{
+    width: 200px;
+    height: 200px;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+}
