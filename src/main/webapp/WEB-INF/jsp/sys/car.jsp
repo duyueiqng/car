@@ -5,98 +5,242 @@
     <%@include file="/common/head.jsp"%>
 </head>
 <body>
-<p>当前位置 : 基础管理 / 车辆管理 </p>
+<p>当前位置 : 基础管理 / 客户管理 </p>
 <div id="root">
     <Collapse value="search">
-        <%--<Panel name="search">--%>
-            <%--条件查询--%>
-            <%--<p slot="content">--%>
-                <%--<i-form  inline :label-width="80">--%>
-                    <%--<form-item label="用户代号" >--%>
-                        <%--<i-input type="text" v-model="userVo.userCode" />--%>
-                    <%--</form-item>--%>
-                    <%--<form-item label="角色">--%>
-                        <%--<i-select  v-model="userVo.userRole" style="width:200px">--%>
-                            <%--<i-Option value=" ">【全部】</i-Option>--%>
-                            <%--<i-Option v-for="item in roleList" :value="item.id" :key="item.id">{{ item.roleName }}</i-Option>--%>
-                        <%--</i-select>--%>
-                    <%--</form-item>--%>
-                    <%--<form-item label="出生日期">--%>
-                        <%--<row>--%>
-                            <%--<col span="12">--%>
-                            <%--<Date-Picker type="date" placeholder="Start date"  style="width: 180px" @on-change="userVo.startDate=$event"></Date-Picker>--%>
-                            <%--</col>--%>
-                            <%--<col span="12">--%>
-                            <%--<Date-Picker type="date"  placeholder="End date"  style="width: 180px" @on-change="userVo.endDate=$event"></Date-Picker>--%>
-                            <%--</col>--%>
-                        <%--</row>--%>
-                    <%--</form-item>--%>
-                    <%--<form-item>--%>
-                        <%--<i-button @click="searchUserList">搜索</i-button>--%>
-                    <%--</form-item>--%>
-                <%--</i-form>--%>
-            <%--</p>--%>
-        <%--</Panel>--%>
+        <Panel name="search">
+            条件查询
+            <p slot="content">
+                <i-form  inline :label-width="80">
+                    <form-item label="车牌号" >
+                        <i-input type="text" v-model="carVo.carNumber" />
+                    </form-item>
+                    <form-item label="车辆颜色" >
+                        <i-input type="text" v-model="carVo.carColor" />
+                    </form-item>
+                    <form-item label="车型" >
+                        <i-input type="text" v-model="carVo.carType" />
+                    </form-item>
+                    <form-item>
+                        <%--点击搜索为了页码不出错,需要在条件查询时确保页码为1--%>
+                        <i-button @click="pageNo=1;searchUserPage()">搜索</i-button>
+                    </form-item>
+                </i-form>
+            </p>
+        </Panel>
         <card>
-            <i-button type="success" >添加用户</i-button>
-            <i-button type="primary" @click="toGraint">角色授权</i-button>
+            <shiro:hasPermission name="user:add">
+                <i-button type="success" @click="toAdd">添加用户</i-button>
+            </shiro:hasPermission>
         </card>
 
     </Collapse>
-    <i-table :columns="myColumns" :data="carList" border stripe>
+    <i-table :columns="myColumns" :data="pageResult.rows" border stripe :height="400">
+        <template slot-scope="{row}" slot="gender" >
+            <span>{{row.gender==1?"男":"女"}}</span>
+        </template>
+        <template slot-scope="{row}" slot="roleName" >
+            <span>{{row.role.roleName}}</span>
+        </template>
+
         <template slot-scope="{row,index}" slot="action">
-            <i-button type="warning" @click="toUpdate(row)" >修改</i-button>
-            <i-button type="error" @click="del(row)" >刪除</i-button>
+            <shiro:hasPermission name="user:update">
+                <i-button type="warning" @click="toUpdate(row)" >修改</i-button>
+            </shiro:hasPermission>
+
+            <shiro:hasPermission name="user:del">
+                <i-button type="error" @click="del(row)" >刪除</i-button>
+            </shiro:hasPermission>
         </template>
     </i-table>
-    <%--<modal v-model="graideFlag" title="角色授权" @on-ok="graint">--%>
-        <%--<card>--%>
-            <%--授权对象:&nbsp;&nbsp;&nbsp;--%>
-        <%--</card>--%>
-        <%--<i-table :columns="myColumns2" :data="roleList" border stripe @on-selection-change="tableSelection2=arguments[0]">--%>
 
-        <%--</i-table>--%>
+    <%--弹框消息:增加弹框代码--%>
+    <Modal v-model="addFlag" title="添加车辆信息" @on-ok="doAdd">
+        <i-form :model="forItem" inline :label-width="60">
+            <form-item label="车牌号">
+                <i-input v-model="car.carNumber"/>
+            </form-item>
+            <form-item label="车型">
+                <i-input v-model="car.carType"/>
+            </form-item>
+            <form-item label="车辆颜色">
+                <i-input v-model="car.carColor"/>
+            </form-item>
+            <form-item label="车辆价格">
+                <i-input v-model="car.carPrice"/>
+            </form-item>
+            <form-item label="介绍">
+                <i-input v-model="car.carDemp"/>
+            </form-item>
+            <form-item label="租赁价格">
+                <i-input v-model="car.rentprice"/>
+            </form-item>
+            <form-item label="租赁押金">
+                <i-input v-model="car.deposit"/>
+            </form-item>
+            <form-item label="图片">
+                <i-input v-model="car.carImg"/>
+            </form-item>
+            <form-item label="创建日期">
+                <Date-Picker v-model="car.createtime" type="datetime" format="yyyy-MM-dd HH:mm"  @on-change="car.createtime=$event"></Date-Picker>
+            </form-item>
 
-    <%--</modal>--%>
-    <%--<page :total="pageResult.tatal" &lt;%&ndash;总页数&ndash;%&gt;--%>
-          <%--:current.sync="pageNo"  &lt;%&ndash;当前页&ndash;%&gt;--%>
-          <%--:page-size="pageSize"     &lt;%&ndash;每页条数&ndash;%&gt;--%>
-          <%--@on-change="searchUserList"   &lt;%&ndash; 页码改变的回调，返回改变后的页码 &ndash;%&gt;--%>
-          <%--show-sizer        &lt;%&ndash; 显示分页，用来改变page-size &ndash;%&gt;--%>
-          <%--:page-size-opts="[5,10,15]" &lt;%&ndash;每页条数切换的配置 &ndash;%&gt;--%>
-          <%--@on-page-size-change="changePageSize(arguments[0])" &lt;%&ndash; 切换每页条数时的回调，返回切换后的每页条数 &ndash;%&gt;--%>
-    <%--/>--%>
+        </i-form>
+    </Modal>
+
+    <%--弹框消息:修改弹框代码--%>
+    <Modal v-model="updateFlag" title="修改车辆信息" @on-ok="doUpdate">
+        <i-form :model="forItem" inline :label-width="60">
+            <form-item label="车牌号">
+                <i-input v-model="car.carNumber"/>
+            </form-item>
+            <form-item label="车型">
+                <i-input v-model="car.carType"/>
+            </form-item>
+            <form-item label="车辆颜色">
+                <i-input v-model="car.carColor"/>
+            </form-item>
+            <form-item label="车辆价格">
+                <i-input v-model="car.carPrice"/>
+            </form-item>
+            <form-item label="介绍">
+                <i-input v-model="car.carDemp"/>
+            </form-item>
+            <form-item label="租赁价格">
+                <i-input v-model="car.rentprice"/>
+            </form-item>
+            <form-item label="租赁押金">
+                <i-input v-model="car.deposit"/>
+            </form-item>
+            <form-item label="图片">
+                <i-input v-model="car.carImg"/>
+            </form-item>
+            <form-item label="创建日期">
+                <Date-Picker v-model="car.createtime" type="datetime" format="yyyy-MM-dd HH:mm"  @on-change="car.createtime=$event"></Date-Picker>
+            </form-item>
+        </i-form>
+    </Modal>
+
+    <%--分页标签::total表示页面数据总条数,:current.sync为点击页码自动改变页码,@on-change点击页码改变执行的方法--%>
+    <%--show-sizer显示修改页面容量按钮,:page-size要改变的参数,:page-size-opts自定义页面容量,@on-page-size-change页面容量改变执行的方法--%>
+    <Page :total="pageResult.total"
+          :current.sync="pageNo"
+          @on-change="searchUserPage"
+          show-sizer
+          :page-size="pageSize"
+          :page-size-opts="[5,10,15]"
+          @on-page-size-change="pageSize=arguments[0];searchUserPage()"
+    />
 </div>
 <script >
     new Vue({
+        //挂载点
         el:"#root",
+        //数据存放位置
         data:{
+            //表格数据
             myColumns:[
-                {type: 'selection',width: 60,align: 'center'},
                 {key:"carNumber",title:"车牌号"},
                 {key:"carType",title:"车型"},
-                {slot:"carColor",title:"颜色"},
-                {key:"carPrice",title:"价格"},
+                {key:"carColor",title:"车辆颜色"},
+                {key:"carPrice",title:"车辆价格"},
+                {key:"carDemp",title:"优点"},
                 {key:"rentprice",title:"租赁价格"},
-                {key:"carDemp",title:"介绍"},
                 {key:"deposit",title:"押金"},
                 {key:"carImg",title:"图片"},
                 {slot:"action",title:"操作",width:200}
             ],
-            carList:[],
+            //表格数据内容
+            myData:[],
+            //条件查询输入的条件
+            carVo:{},
+            //当前页码
+            pageNo:1,
+            //页面容量
+            pageSize:5,
+            //分页查询返回的查询数据
+            pageResult:{
+                rows:[],
+                total:0
+            },
+            //添加弹框
+            addFlag:false,
+            //修改弹框
+            updateFlag:false,
+            //添加存放
+            car:{},
+
 
         },
         mounted(){
-            this.searchUserList();
+            this.searchUserPage();
         },
         methods:{
-            searchUserList(){
-                axios.get(`${ctx}/sys/car/list/`)
+            //查询user的全部数据(使用resultVo返回的方法)
+            searchUserPage(){
+                console.log(this.carVo);
+                //get FormData  post json
+                //get提交方法携带参数的方法{params:this.userVo}
+                axios.get(`${ctx}/sys/car/page/${this.pageNo}/${this.pageSize}`,{params:this.carVo})
                     .then(({data})=>{
-                        this.carList=data;
-                        console.log(data)
+                        console.log(data);
+                        this.pageResult=data.result;
                     })
-            }
+            },
+            //添加准备
+            toAdd(){
+                //帮助表单输入初始化
+                this.role = {};
+                this.addFlag=true;
+            },
+            //添加车辆
+            doAdd(){
+                console.log(this.car);
+                axios.post(`${ctx}/sys/car/doAdd`,this.car)
+                    .then(({data})=>{
+                        //接收返回添加成功或者添加失败的返回值
+                        iview.Message.success({content:data.msg});
+                        //刷新数据
+                        this.searchUserPage();
+                    })
+            },
+            //修改准备
+            toUpdate(row){
+                //这句表示这一条数据是点击的数据
+                this.car = row;
+                this.updateFlag=true;
+            },
+            //修改车辆
+            doUpdate(row){
+                alert("确认修改操作!")
+                axios.post(`${ctx}/sys/car/doUpdate`,this.car)
+                    .then(({data})=>{
+                        // this.addFlag = false;
+                        iview.Message.success({content:data.msg});
+                        // this.search();//上面双向绑定可以省略
+                    })
+            },
+            //删除车辆
+            del(row){
+                let _this=this;
+                let flag = iview.Modal.confirm({
+                    title:"您确定要删除该车辆吗?",
+                    content:"改操作不可逆,请谨慎操作.",
+                    onOk(){
+                        console.log(row.id);
+                        axios.get(`${ctx}/sys/car/del?id=${row.id}`)
+                            .then(({data})=>{
+                                // this.addFlag = false;
+                                iview.Message.success({content:data});
+                                _this.searchUserPage();
+                            })
+                    }
+                });
+            },
+
+
+
+
         }
     });
 </script>
