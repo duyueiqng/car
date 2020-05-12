@@ -10,7 +10,7 @@
 <div id="root">
     <card style="margin: 0 auto; width: 400px;height: 400px">
         <p>用户登录</p>
-        <i-form method="post" action="${ctx}/smbms/login" style="margin: 80px auto; width: 300px;height: 300px">
+        <i-form method="post" action="${ctx}/car/login" style="margin: 80px auto; width: 300px;height: 300px">
             <c:if test="${not empty loginErr}">
                 <alert type="error" show-icon>${loginErr}</alert>
             </c:if>
@@ -21,7 +21,7 @@
                 <i-input prefix="ios-lock" name="password" type="password"></i-input>
             </form-item>
             <form-item >
-                <i-button html-type="submit" type="primary" >登录</i-button>
+                <i-button html-type="submit" type="primary" style="text-align: center">登录</i-button>
             </form-item>
 
         </i-form>

@@ -1,5 +1,6 @@
 package com.zy.service;
 
+import com.baomidou.mybatisplus.extension.service.IService;
 import com.zy.pojo.User;
 import com.zy.vo.PageResult;
 import com.zy.vo.UserVo;
@@ -10,7 +11,7 @@ import java.util.List;
  * @author dyqstart
  * @create 2020-05-11 8:37
  */
-public interface UserService {
+public interface UserService extends IService<User> {
 
     /**
      * 基础便利
@@ -42,5 +43,12 @@ public interface UserService {
      * 删除
      */
     void del(Integer id);
+
+    /**
+     * 通过用户名查找用户
+     * @param username
+     * @return
+     */
+    User findByUsername(String username);
 
 }

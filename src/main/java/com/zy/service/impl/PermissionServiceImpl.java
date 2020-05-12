@@ -4,15 +4,19 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.zy.mapper.PermissionMapper;
+import com.zy.mapper.RoleMenuMapper;
 import com.zy.pojo.Menu;
+import com.zy.pojo.RoleMenu;
 import com.zy.service.PermissionService;
 import com.zy.vo.TreeNodeVo;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.subject.Subject;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @author shkstart
@@ -22,6 +26,10 @@ import java.util.List;
 public class PermissionServiceImpl extends ServiceImpl<PermissionMapper,Menu> implements PermissionService {
     @Resource
     PermissionMapper permissionMapper;
+
+    @Resource
+    RoleMenuMapper roleMenuMapper;
+
     @Override
     public List<TreeNodeVo> searchTreeNode(Integer id) {
         List<TreeNodeVo> treeNodeVos = this.searchByParentId(null, id);
@@ -35,9 +43,46 @@ public class PermissionServiceImpl extends ServiceImpl<PermissionMapper,Menu> im
         }
         return treeNodeVos;
     }
+
     @Override
-    public List<String> searchPermByRoleId(Integer roleId) {
-        return null;
+    public List<String> searchPermByRoleId(String roleId) {
+        return permissionMapper.searchPermByRoleId(roleId);
+    }
+
+    @Override
+    public List<Menu> searchMenuList() {
+        Subject subject = SecurityUtils.getSubject();
+        List<Menu> menuList01 = this.getPermissions(null);
+        menuList01.stream().filter(p->subject.isPermitted(p.getPermCode())).collect(Collectors.toList());
+        for (Menu menu : menuList01){
+            List<Menu> menuList02 = this.getPermissions(menu.getId());
+            menuList02.stream().filter(p->subject.isPermitted(p.getPermCode())).collect(Collectors.toList());
+            menu.getChildren().addAll(menuList02);
+        }
+        return menuList01;
+    }
+
+    @Override
+    public void graint(Integer roleId, Integer[] ids) {
+        QueryWrapper wrapper = Wrappers.<RoleMenu>query();
+        wrapper.eq("role_id",roleId);
+        roleMenuMapper.delete(wrapper);
+        if (ids!=null&& ids.length>0){
+            for (Integer id:ids){
+                RoleMenu roleMenu = new RoleMenu(roleId,id);
+                roleMenuMapper.insert(roleMenu);
+            }
+        }
+    }
+
+    private List<Menu> getPermissions(Integer parentId) {
+        QueryWrapper wrapper = Wrappers.<Menu>query();
+        if (parentId==null){
+            wrapper.isNull("parent_id");
+        }else{
+            wrapper.eq("parent_id",parentId);
+        }
+        return super.list(wrapper);
     }
     public List<TreeNodeVo> searchByParentId(Integer parentId,Integer roleId) {
         List<Integer> perIdByRoleId = permissionMapper.getPerIdByRoleId(roleId);
@@ -61,7 +106,6 @@ public class PermissionServiceImpl extends ServiceImpl<PermissionMapper,Menu> im
             }else{
                 treeNodeVo.setChecked(false);
             }
-
             treeNodeVo.setExpand(false);
             treeNodeVo.setTitle(menu.getName());
             treeNodeVos.add(treeNodeVo);

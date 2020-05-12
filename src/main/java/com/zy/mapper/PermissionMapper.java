@@ -12,9 +12,9 @@ import java.util.List;
  * @date 2020/5/8 - 15:39
  */
 public interface PermissionMapper extends BaseMapper<Menu>{
-//    @Select("select name from menu where id in(select mid from role_menu where rId=#{roleId})")
-//    List<String> searchPermByRoleId(@Param("roleId") Integer roleId);
+    @Select("select name from menu where id in(select menu_id from role_menu where role_id=#{roleId})")
+    List<String> searchPermByRoleId(@Param("roleId") String roleId);
     //通过角色ID得到权限id列表
-    @Select("select mid from role_menu where rId=#{roleId}")
+    @Select("select menu_id from role_menu where role_id=#{roleId}")
     List<Integer> getPerIdByRoleId(@Param("roleId") Integer roleId);
 }

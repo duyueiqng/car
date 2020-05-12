@@ -5,7 +5,6 @@ import com.zy.service.CarService;
 import com.zy.vo.CarVo;
 import com.zy.vo.PageResult;
 import com.zy.vo.ResultVo;
-import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;

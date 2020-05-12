@@ -1,7 +1,9 @@
 package com.zy.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.zy.mapper.UserMapper;
 import com.zy.pojo.Car;
 import com.zy.pojo.User;
@@ -19,7 +21,7 @@ import java.util.List;
  * @create 2020-05-11 8:50
  */
 @Service
-public class UserServiceImpl implements UserService {
+public class UserServiceImpl extends ServiceImpl<UserMapper,User> implements UserService {
 
     @Resource
     private UserMapper userMapper;
@@ -57,5 +59,12 @@ public class UserServiceImpl implements UserService {
     @Override
     public void del(Integer id) {
         userMapper.deleteById(id);
+    }
+
+    @Override
+    public User findByUsername(String username) {
+        LambdaQueryWrapper<User> wrapper = Wrappers.<User>lambdaQuery();
+        wrapper.eq(User::getUsercode,username);
+        return super.getOne(wrapper);
     }
 }
