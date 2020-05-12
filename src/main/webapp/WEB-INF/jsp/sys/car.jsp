@@ -185,6 +185,7 @@
                     .then(({data})=>{
                         console.log(data);
                         this.pageResult=data.result;
+                        console.log(this.pageResult.total);
                     })
             },
             //添加准备

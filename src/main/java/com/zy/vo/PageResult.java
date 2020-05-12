@@ -14,12 +14,12 @@ public class PageResult {
 
 
     private List rows;//一行数据
-    private Long tatal;//符合条件的总记录数
+    private Long total;//符合条件的总记录数
 
     public static PageResult setPageResult(IPage iPage) {
         PageResult pageResult = new PageResult();
         pageResult.rows = iPage.getRecords();
-        pageResult.tatal = iPage.getTotal();
+        pageResult.total = iPage.getTotal();
         return pageResult;
     }
 

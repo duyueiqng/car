@@ -35,6 +35,7 @@ public class CarController {
         System.out.println(carVo.getCarColor());
         System.out.println("页码:"+pageNo+",页面容量:"+pageSize+",条件:"+carVo);
         PageResult pageResult = carService.findAll(pageNo,pageSize,carVo);
+        System.out.println("查询到的总条数:"+pageResult.getTotal());
         return ResultVo.success(pageResult);
     }
 

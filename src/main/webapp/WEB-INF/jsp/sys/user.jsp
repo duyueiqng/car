@@ -12,24 +12,17 @@
             条件查询
             <p slot="content">
                 <i-form  inline :label-width="80">
-                    <form-item label="用户代号" >
-                        <i-input type="text" v-model="userVo.userCode" />
+                    <form-item label="客户姓名:" >
+                        <i-input type="text" v-model="userVo.username" />
                     </form-item>
-                    <form-item label="角色">
+                    <form-item label="身份信息:" >
+                        <i-input type="text" v-model="userVo.id_card" />
+                    </form-item>
+                    <form-item label="角色查询:">
                         <i-select  v-model="userVo.userRole" style="width:200px">
                             <i-Option value=" ">【全部】</i-Option>
                             <i-Option v-for="item in roleList" :value="item.id" :key="item.id">{{ item.roleName }}</i-Option>
                         </i-select>
-                    </form-item>
-                    <form-item label="出生日期">
-                        <row>
-                            <col span="12">
-                            <Date-Picker type="date" placeholder="Start date"  style="width: 180px" @on-change="userVo.startDate=$event"></Date-Picker>
-                            </col>
-                            <col span="12">
-                            <Date-Picker type="date"  placeholder="End date"  style="width: 180px" @on-change="userVo.endDate=$event"></Date-Picker>
-                            </col>
-                        </row>
                     </form-item>
                     <form-item>
                         <i-button @click="searchUserList">搜索</i-button>
@@ -38,17 +31,20 @@
             </p>
         </Panel>
         <card>
-            <i-button type="success" >添加用户</i-button>
+            <i-button type="success" @click="toAdd">添加用户</i-button>
             <i-button type="primary" @click="toGraint">角色授权</i-button>
         </card>
 
     </Collapse>
     <i-table :columns="myColumns" :data="pageResult.rows" border stripe @on-selection-change="tableSelection=arguments[0]">
-        <template slot-scope="{row}" slot="gender">
-            {{row.gender==1?"女":"男"}}
+        <template slot-scope="{row}" slot="sex">
+            {{row.sex==1?"男":"女"}}
         </template>
         <template slot-scope="{row}" slot="roleName">
             {{row.role.roleName}}
+        </template>
+        <template slot-scope="{row}" slot="idCard">
+            {{row.idCard}}
         </template>
         <template slot-scope="{row,index}" slot="action">
             <i-button type="warning" @click="toUpdate(row)" >修改</i-button>
@@ -64,7 +60,93 @@
         </i-table>
 
     </modal>
-    <page :total="pageResult.tatal" <%--总页数--%>
+
+
+    <%--弹框消息:增加弹框代码--%>
+    <Modal v-model="addFlag" title="增加客户信息" @on-ok="doAdd">
+        <i-form :model="forItem" inline :label-width="60">
+            <form-item label="编号">
+                <i-input v-model="user.usercode"/>
+            </form-item>
+            <form-item label="姓名">
+                <i-input v-model="user.username"/>
+            </form-item>
+            <form-item label="密码">
+                <i-input type="password" v-model="user.password"/>
+            </form-item>
+            <form-item label="性别">
+                <template>
+                    <Radio-Group v-model="user.sex">
+                        <Radio label="1">男</Radio>
+                        <Radio label="0">女</Radio>
+                    </Radio-Group>
+                </template>
+                <%--<i-input v-model="user.gender"/>--%>
+            </form-item>
+            <form-item label="生日">
+                <Date-Picker v-model="user.birthday" type="date" format="yyyy-MM-dd"  @on-change="user.birthday=$event"></Date-Picker>
+            </form-item>
+            <form-item label="身份信息">
+                <i-input v-model="user.idCard"/>
+            </form-item>
+            <form-item label="角色:">
+                <i-select  v-model="user.userRole" style="width:200px">
+                    <i-Option v-for="item in roleList" :value="item.id" :key="item.id">{{ item.roleName }}</i-Option>
+                </i-select>
+            </form-item>
+            <form-item label="手机号">
+                <i-input v-model="user.phone"/>
+            </form-item>
+            <form-item label="地区">
+                <i-input v-model="user.address"/>
+            </form-item>
+            <form-item label="创建日期">
+                <Date-Picker v-model="user.createdate" type="datetime" format="yyyy-MM-dd HH:mm"  @on-change="user.createdate=$event"></Date-Picker>
+            </form-item>
+
+        </i-form>
+    </Modal>
+
+    <%--弹框消息:修改弹框代码--%>
+    <Modal v-model="updateFlag" title="修改客户信息" @on-ok="doUpdate">
+        <i-form :model="forItem" inline :label-width="60">
+            <form-item label="编号">
+                <i-input v-model="user.usercode"/>
+            </form-item>
+            <form-item label="姓名">
+                <i-input v-model="user.username"/>
+            </form-item>
+            <form-item label="性别">
+                <template>
+                    <Radio-Group v-model="user.sex">
+                        <Radio label="1">男</Radio>
+                        <Radio label="0">女</Radio>
+                    </Radio-Group>
+                </template>
+            </form-item>
+            <form-item label="生日">
+                <Date-Picker v-model="user.birthday" type="date" format="yyyy-MM-dd"  @on-change="user.birthday=$event"></Date-Picker>
+            </form-item>
+            <form-item label="身份信息">
+                <i-input v-model="user.idCard"/>
+            </form-item>
+            <form-item label="手机号">
+                <i-input v-model="user.phone"/>
+            </form-item>
+            <form-item label="地区">
+                <i-input v-model="user.address"/>
+            </form-item>
+            <form-item label="创建日期">
+                <Date-Picker v-model="user.createdate" type="datetime" format="yyyy-MM-dd HH:mm"  @on-change="user.createdate=$event"></Date-Picker>
+            </form-item>
+
+        </i-form>
+    </Modal>
+
+
+
+
+    <page :total="pageResult.total" <%--总页数--%>
           :current.sync="pageNo"  <%--当前页--%>
           :page-size="pageSize"     <%--每页条数--%>
           @on-change="searchUserList"   <%-- 页码改变的回调，返回改变后的页码 --%>
@@ -79,15 +161,16 @@
         data:{
             myColumns:[
                 {type: 'selection',width: 60,align: 'center'},
-                {key:"userCode",title:"代号"},
-                {key:"username",title:"名称"},
-                {slot:"gender",title:"性别"},
-                {key:"birthday",title:"生日"},
-                {key:"phone",title:"手机"},
-                {slot:"roleName",title:"角色名称"},
-                {key:"attachPath",title:"工作照"},
-                {key:"id",title:"id"},
-                {slot:"action",title:"操作",width:200}
+                {key:"usercode",title:"代号",width: 80},
+                {key:"username",title:"名称",width: 120},
+                {slot:"sex",title:"性别",width: 70},
+                {key:"birthday",title:"生日",width: 120},
+                {key:"phone",title:"手机",width: 138},
+                {slot:"roleName",title:"角色名称",width: 130},
+                {key:"attachPath",title:"工作照",width: 120},
+                {key:"address",title:"地址",width: 70},
+                {slot:"idCard",title:"身份证号",width: 200},
+                {slot:"action",title:"操作",width:166}
             ],
             myColumns2:[
                 {type: 'selection',width: 80,align: 'center'},
@@ -107,6 +190,9 @@
             tableSelection2:[],
             graintId:0,
             graintRoleId:0,
+            addFlag:false,
+            updateFlag:false,
+            user:{},
 
         },
         mounted(){
@@ -144,7 +230,7 @@
             searchUserList(){
 
                 //get FormData  post json
-                axios.get(`${ctx}/sys/user/list/${this.pageNo}/${this.pageSize}`,{params:this.userVo})
+                axios.get(`${ctx}/sys/user/page/${this.pageNo}/${this.pageSize}`,{params:this.userVo})
                     .then(({data})=>{
                         this.pageResult=data.result;
                         // console.log(this.pageResult)
@@ -159,8 +245,62 @@
             changePageSize(pageSize){
                 this.pageSize=pageSize;
                 this.searchUserList();
-            }
-        }
+            },
+            //添加准备
+            toAdd(){
+                //帮助表单输入初始化
+                this.role = {};
+                this.addFlag=true;
+            },
+            //添加车辆
+            doAdd(){
+                console.log(this.user);
+                axios.post(`${ctx}/sys/user/doAdd`,this.user)
+                    .then(({data})=>{
+                        //接收返回添加成功或者添加失败的返回值
+                        iview.Message.success({content:data.msg});
+                        //刷新数据
+                        this.searchUserList();
+                    })
+            },
+            //修改准备
+            toUpdate(row){
+                //帮助表单输入初始化
+                this.user = row;
+                this.updateFlag=true;
+            },
+            //修改
+            doUpdate(row){
+                console.log(this.user);
+                axios.post(`${ctx}/sys/user/doUpdate`,this.user)
+                    .then(({data})=>{
+                        //接收返回添加成功或者添加失败的返回值
+                        iview.Message.success({content:data.msg});
+                        //刷新数据
+                        this.searchUserList();
+                    })
+            },
+
+            //删除用户
+            del(row){
+                let _this=this;
+                let flag = iview.Modal.confirm({
+                    title:"您确定要删除该用户吗?",
+                    content:"改操作不可逆,请谨慎操作.",
+                    onOk(){
+                        console.log(row.id);
+                        axios.get(`${ctx}/sys/user/del?id=${row.id}`)
+                            .then(({data})=>{
+                                // this.addFlag = false;
+                                iview.Message.success({content:data});
+                                _this.searchUserList();
+                            })
+                    }
+                });
+            },
+
+        },
+
     });
 </script>
 </body>

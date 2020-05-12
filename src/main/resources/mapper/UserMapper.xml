@@ -2,13 +2,17 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.mingzi.mapper">
-    <!--<resultMap id="userRm" type="com.mingzi.pojo.User" autoMapping="true">-->
-        <!--<id property="id" column="id"/>-->
-        <!--<association property="role" javaType="com.mingzi.pojo.Role" >-->
-            <!--<id property="id" column="role_id"/>-->
-            <!--<result property="roleName" column="role_name"/>-->
-        <!--</association>-->
-    <!--</resultMap>-->
+<mapper namespace="com.zy.mapper.UserMapper">
+    <resultMap id="userByRole" type="com.zy.pojo.User" autoMapping="true">
+        <id property="id" column="id"/>
+        <association property="role" javaType="com.zy.pojo.Role">
+            <id property="id" column="role_id"/>
+            <result property="roleName" column="role_name"/>
 
+        </association>
+    </resultMap>
+
+    <select id="findAll" resultMap="userByRole">
+        select t1.*,t2.id as role_id,t2.role_Name from user t1 left join role t2 on t1.user_role=t2.id ${ew.customSqlSegment}
+    </select>
 </mapper>
