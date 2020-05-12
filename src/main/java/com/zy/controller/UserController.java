@@ -1,9 +1,7 @@
 package com.zy.controller;
 
-import com.zy.pojo.Car;
 import com.zy.pojo.User;
 import com.zy.service.UserService;
-import com.zy.vo.CarVo;
 import com.zy.vo.PageResult;
 import com.zy.vo.ResultVo;
 import com.zy.vo.UserVo;

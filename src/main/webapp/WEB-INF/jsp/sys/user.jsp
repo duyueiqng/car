@@ -200,36 +200,7 @@
             this.searchRoleList();
         },
         methods:{
-            graint(){
-                if (this.tableSelection2.length<=0){
-                    iview.Modal.error({
-                        title:"信息提示",
-                        content:"您只能选择一项角色！"
-                    });
-                    return ;
-                }
-                axios.get(`${ctx}/sys/user/graint?graintId=${this.graintId}&graintRoleId=${this.graintRoleId}`)
-                    .then(({data})=>{
-                        this.graideFlag=false;//关闭静态框
-                        iview.Message.success({content:data.msg});
-                    })
-            },
-            toGraint(){
-                if (this.tableSelection.length<=0){
-                    iview.Modal.error({
-                        title:"信息提示",
-                        content:"请您选择一项或者多项授权！"
-                    });
-                    return ;
-                }
-                this.graideFlag=true;
-                graintId=this.tableSelection[0].id;
-                alert(graintId);
-
-            },
             searchUserList(){
-
-                //get FormData  post json
                 axios.get(`${ctx}/sys/user/page/${this.pageNo}/${this.pageSize}`,{params:this.userVo})
                     .then(({data})=>{
                         this.pageResult=data.result;

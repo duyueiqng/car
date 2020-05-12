@@ -1,7 +1,12 @@
 package com.zy.pojo;
 
 
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
+
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Data
 public class User {
@@ -34,7 +39,8 @@ public class User {
 	/**
 	 * 生日
 	 */
-	private java.time.LocalDate birthday;
+	@JsonFormat(pattern = "yyyy-MM-dd")
+	private LocalDate birthday;
 
 	/**
 	 * 身份证信息
@@ -64,7 +70,8 @@ public class User {
 	/**
 	 * 创建时间
 	 */
-	private java.time.LocalDateTime createdate;
+	@JsonFormat(pattern = "yyyy-MM-dd HH:mm")
+	private LocalDateTime createdate;
 
 	/**
 	 * 省份证正面
@@ -75,6 +82,14 @@ public class User {
 	 * 省份证反面
 	 */
 	private String attachDescr;
+
+	/**
+	 * 用于显示用户的角色信息
+	 * @TableField(exist = false)表示这不是一个数据库相对应的数据
+	 */
+	@TableField(exist = false)
+	private Role role;
+
 
 
 }

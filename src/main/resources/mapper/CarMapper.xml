@@ -11,4 +11,5 @@
     <select id="findAll" resultType="com.zy.pojo.Car">
         select * from car ${ew.customSqlSegment}
     </select>
+
 </mapper>

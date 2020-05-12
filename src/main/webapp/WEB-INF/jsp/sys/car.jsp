@@ -1,4 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" isELIgnored="true" %>
+<%@ taglib prefix="shiro" uri="http://shiro.apache.org/tags" %>
 <html>
 <head>
     <title>员工管理</title>
@@ -29,9 +30,9 @@
             </p>
         </Panel>
         <card>
-            <shiro:hasPermission name="user:add">
+            <%--<shiro:hasPermission name="user:add">--%>
                 <i-button type="success" @click="toAdd">添加用户</i-button>
-            </shiro:hasPermission>
+            <%--</shiro:hasPermission>--%>
         </card>
 
     </Collapse>
@@ -44,19 +45,19 @@
         </template>
 
         <template slot-scope="{row,index}" slot="action">
-            <shiro:hasPermission name="user:update">
+            <%--<shiro:hasPermission name="user:update">--%>
                 <i-button type="warning" @click="toUpdate(row)" >修改</i-button>
-            </shiro:hasPermission>
+            <%--</shiro:hasPermission>--%>
 
-            <shiro:hasPermission name="user:del">
+            <%--<shiro:hasPermission name="user:del">--%>
                 <i-button type="error" @click="del(row)" >刪除</i-button>
-            </shiro:hasPermission>
+            <%--</shiro:hasPermission>--%>
         </template>
     </i-table>
 
     <%--弹框消息:增加弹框代码--%>
     <Modal v-model="addFlag" title="添加车辆信息" @on-ok="doAdd">
-        <i-form :model="forItem" inline :label-width="60">
+        <i-form  inline :label-width="60">
             <form-item label="车牌号">
                 <i-input v-model="car.carNumber"/>
             </form-item>
@@ -90,7 +91,7 @@
 
     <%--弹框消息:修改弹框代码--%>
     <Modal v-model="updateFlag" title="修改车辆信息" @on-ok="doUpdate">
-        <i-form :model="forItem" inline :label-width="60">
+        <i-form  inline :label-width="60">
             <form-item label="车牌号">
                 <i-input v-model="car.carNumber"/>
             </form-item>
