@@ -8,6 +8,7 @@
 <body>
 <p>当前位置 : 基础管理 / 客户管理 </p>
 <div id="root">
+    <%--下拉框--%>
     <Collapse value="search">
         <Panel name="search">
             条件查询
@@ -29,19 +30,25 @@
                 </i-form>
             </p>
         </Panel>
-        <card>
-            <%--<shiro:hasPermission name="user:add">--%>
-                <i-button type="success" @click="toAdd">添加用户</i-button>
-            <%--</shiro:hasPermission>--%>
-        </card>
 
     </Collapse>
+    <card>
+       <%--<shiro:hasPermission name="user:add">--%>
+        <i-button type="success" @click="toAdd">添加用户</i-button>
+        <%--</shiro:hasPermission>--%>
+    </card>
     <i-table :columns="myColumns" :data="pageResult.rows" border stripe :height="400">
         <template slot-scope="{row}" slot="gender" >
             <span>{{row.gender==1?"男":"女"}}</span>
         </template>
+        <template slot-scope="{row}" slot="isFree" >
+            <span>{{row.isFree==1?"空闲":"出租"}}</span>
+        </template>
         <template slot-scope="{row}" slot="roleName" >
             <span>{{row.role.roleName}}</span>
+        </template>
+        <template slot-scope="{row}" slot="carImg" >
+            <img :src="row.carImg" alt="" width="50">
         </template>
 
         <template slot-scope="{row,index}" slot="action">
@@ -55,9 +62,10 @@
         </template>
     </i-table>
 
+
     <%--弹框消息:增加弹框代码--%>
     <Modal v-model="addFlag" title="添加车辆信息" @on-ok="doAdd">
-        <i-form  inline :label-width="60">
+        <i-form inline :label-width="60">
             <form-item label="车牌号">
                 <i-input v-model="car.carNumber"/>
             </form-item>
@@ -79,8 +87,11 @@
             <form-item label="租赁押金">
                 <i-input v-model="car.deposit"/>
             </form-item>
-            <form-item label="图片">
-                <i-input v-model="car.carImg"/>
+            <form-item label="工作照：">
+                <Upload action="sys/car/upload" name="carImg" :before-upload="doBeforeUpload" :on-success="uploadSuccess">
+                    <i-button icon="ios-cloud-upload-outline">请选择...</i-button>
+                </Upload>
+                <div class="img" :style="{'background-image': 'url(' + img +')'}" v-if="img"></div>
             </form-item>
             <form-item label="创建日期">
                 <Date-Picker v-model="car.createtime" type="datetime" format="yyyy-MM-dd HH:mm"  @on-change="car.createtime=$event"></Date-Picker>
@@ -91,7 +102,7 @@
 
     <%--弹框消息:修改弹框代码--%>
     <Modal v-model="updateFlag" title="修改车辆信息" @on-ok="doUpdate">
-        <i-form  inline :label-width="60">
+        <i-form inline :label-width="60">
             <form-item label="车牌号">
                 <i-input v-model="car.carNumber"/>
             </form-item>
@@ -113,16 +124,18 @@
             <form-item label="租赁押金">
                 <i-input v-model="car.deposit"/>
             </form-item>
-            <form-item label="图片">
-                <i-input v-model="car.carImg"/>
-            </form-item>
-            <form-item label="创建日期">
-                <Date-Picker v-model="car.createtime" type="datetime" format="yyyy-MM-dd HH:mm"  @on-change="car.createtime=$event"></Date-Picker>
+            <form-item label="工作照：">
+                <Upload action="sys/car/upload" name="carImg" :before-upload="doBeforeUpload" :on-success="uploadSuccess">
+                    <i-button icon="ios-cloud-upload-outline">请选择...</i-button>
+                </Upload>
+                <div class="img" :style="{'background-image': 'url(' + img +')'}" v-if="img"></div>
             </form-item>
         </i-form>
     </Modal>
 
-    <%--分页标签::total表示页面数据总条数,:current.sync为点击页码自动改变页码,@on-change点击页码改变执行的方法--%>
+
+
+<%--分页标签::total表示页面数据总条数,:current.sync为点击页码自动改变页码,@on-change点击页码改变执行的方法--%>
     <%--show-sizer显示修改页面容量按钮,:page-size要改变的参数,:page-size-opts自定义页面容量,@on-page-size-change页面容量改变执行的方法--%>
     <Page :total="pageResult.total"
           :current.sync="pageNo"
@@ -147,8 +160,9 @@
                 {key:"carPrice",title:"车辆价格"},
                 {key:"carDemp",title:"优点"},
                 {key:"rentprice",title:"租赁价格"},
+                {slot:"isFree",title:"状态"},
                 {key:"deposit",title:"押金"},
-                {key:"carImg",title:"图片"},
+                {slot:"carImg",title:"图片"},
                 {slot:"action",title:"操作",width:200}
             ],
             //表格数据内容
@@ -170,6 +184,8 @@
             updateFlag:false,
             //添加存放
             car:{},
+            //图片预览功能的实现
+            img:null,
 
 
         },
@@ -184,15 +200,15 @@
                 //get提交方法携带参数的方法{params:this.userVo}
                 axios.get(`${ctx}/sys/car/page/${this.pageNo}/${this.pageSize}`,{params:this.carVo})
                     .then(({data})=>{
-                        console.log(data);
+                        // console.log(data);
                         this.pageResult=data.result;
-                        console.log(this.pageResult.total);
+                        // console.log(this.pageResult.total);
                     })
             },
             //添加准备
             toAdd(){
                 //帮助表单输入初始化
-                this.role = {};
+                this.car = {};
                 this.addFlag=true;
             },
             //添加车辆
@@ -210,14 +226,13 @@
             toUpdate(row){
                 //这句表示这一条数据是点击的数据
                 this.car = row;
+                console.log(this.car);
                 this.updateFlag=true;
             },
             //修改车辆
             doUpdate(row){
-                alert("确认修改操作!")
                 axios.post(`${ctx}/sys/car/doUpdate`,this.car)
                     .then(({data})=>{
-                        // this.addFlag = false;
                         iview.Message.success({content:data.msg});
                         // this.search();//上面双向绑定可以省略
                     })
@@ -239,6 +254,30 @@
                     }
                 });
             },
+            //获得上传的图片(图片预览)
+            doBeforeUpload(file){
+                const reader = new FileReader();
+                reader.readAsDataURL(file);
+                reader.onloadend = () => {
+                    this.img = reader.result;
+                }
+            },
+            //上传工作照成功提示
+            uploadSuccess(response){
+                console.log("返回的图片值:"+response.result);  //上传工作照会返回一个图片的信息
+                this.car.carImg=response.result.carImg;  //给需要修改的数据库指定的数据赋值
+                iview.Message.success("上传成功！");
+            },
+            <%--//提交工作照数据保存数据库--%>
+            <%--updateAttach(){--%>
+                <%--console.log(this.uploadForm);--%>
+                <%--axios.post(`${ctx}/sys/user/updateAttach`,this.uploadForm)--%>
+                    <%--.then(({data})=>{--%>
+                        <%--this.uploadFlag=false;--%>
+                        <%--iview.Message.success(data.msg);--%>
+                        <%--this.searchUserPage();--%>
+                    <%--});--%>
+            <%--}--%>
 
 
 

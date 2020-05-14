@@ -38,7 +38,7 @@
                 <i-input v-model="role.roleName" size="large"/>
             </form-item>
             <form-item label="修改时间">
-                <date-picker type="datetime" size="large" format="yyyy-MM-dd HH:mm" v-model="role.modifyDate" @on-change="role.modifyDate=$event"/>
+                <date-picker type="datetime" size="large" format="yyyy-MM-dd HH:mm" v-model="role.createdate" @on-change="role.createdate=$event"/>
             </form-item>
         </i-form>
     </modal>
@@ -56,7 +56,7 @@
                 {type: 'selection',width: 60,align: 'center'},
                 {title:"角色名称",key:"roleName"},
                 {title:"角色代号",key:"roleCode"},
-                {title:"创建时间",key:"creationDate"},
+                {title:"创建时间",key:"createdate"},
                 {title:"修改时间",key:"modifyDate"},
                 {title:"操作",slot:"action"},
             ],
@@ -92,6 +92,7 @@
             },
             toUpdate(row){
                 Object.assign(this.role,row);
+                // console.log(this.role)
                 this.updateFlag=true;
             },
             update(){

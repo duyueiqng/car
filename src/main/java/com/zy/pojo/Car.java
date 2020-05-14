@@ -53,6 +53,11 @@ public class Car {
 	private String carImg;
 
 	/**
+	 * 状态
+	 */
+	private Integer isFree;
+
+	/**
 	 * 创建时间
 	 */
 	@JsonFormat(pattern = "yyyy-MM-dd HH:mm")

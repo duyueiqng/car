@@ -6,9 +6,17 @@ import com.zy.vo.CarVo;
 import com.zy.vo.PageResult;
 import com.zy.vo.ResultVo;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
+import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
+import java.io.File;
+import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.UUID;
 
 /**
  * @author dyqstart
@@ -81,6 +89,34 @@ public class CarController {
         }catch (Exception e){
             return msg;
         }
+    }
+
+
+    //文件上传功能
+    @PostMapping("/upload")
+    @ResponseBody
+    public ResultVo upload(MultipartFile carImg, HttpServletRequest request){
+        ServletContext sc=request.getServletContext();//sc相当于jsp中的内置对象application
+        String realPath=sc.getRealPath("/attach");//应用程序的根目录下的attach文件夹对应绝对路径
+        File folder=new File(realPath);
+        if(folder.exists()==false){  //判断attach目录是否存在，不存在会自动创建
+            folder.mkdirs();
+        }
+        String original=carImg.getOriginalFilename(); //得到上传的原始文件名
+        System.out.println("原始的文件名:"+original);
+        int index=original.lastIndexOf(".");
+        String suffix=original.substring(index); //得到后缀名
+        String newFileName= UUID.randomUUID().toString()+suffix; //为上传文件起一个新的唯一的文件名
+        File file=new File(folder,newFileName);
+        try {
+            carImg.transferTo(file); //执行上传
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        Map<String,Object> map=new HashMap<>();
+        map.put("carImg","attach/"+newFileName);
+        System.out.println("最后返回的map:"+map);
+        return ResultVo.success(map);
     }
 
 

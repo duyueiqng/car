@@ -46,6 +46,9 @@
         <template slot-scope="{row}" slot="idCard">
             {{row.idCard}}
         </template>
+        <template slot-scope="{row}" slot="attachPath">
+            <img :src="row.attachPath" alt="" width="50">
+        </template>
         <template slot-scope="{row,index}" slot="action">
             <i-button type="warning" @click="toUpdate(row)" >修改</i-button>
             <i-button type="error" @click="del(row)" >刪除</i-button>
@@ -99,6 +102,12 @@
             </form-item>
             <form-item label="地区">
                 <i-input v-model="user.address"/>
+            </form-item>
+            <form-item label="照片：">
+                <Upload action="sys/user/upload" name="attachPath" :before-upload="doBeforeUpload" :on-success="uploadSuccess">
+                    <i-button icon="ios-cloud-upload-outline">请选择...</i-button>
+                </Upload>
+                <div class="img" :style="{'background-image': 'url(' + img +')'}" v-if="img"></div>
             </form-item>
             <form-item label="创建日期">
                 <Date-Picker v-model="user.createdate" type="datetime" format="yyyy-MM-dd HH:mm"  @on-change="user.createdate=$event"></Date-Picker>
@@ -167,7 +176,7 @@
                 {key:"birthday",title:"生日",width: 120},
                 {key:"phone",title:"手机",width: 138},
                 {slot:"roleName",title:"角色名称",width: 130},
-                {key:"attachPath",title:"工作照",width: 120},
+                {slot:"attachPath",title:"工作照",width: 120},
                 {key:"address",title:"地址",width: 70},
                 {slot:"idCard",title:"身份证号",width: 200},
                 {slot:"action",title:"操作",width:166}
@@ -193,6 +202,8 @@
             addFlag:false,
             updateFlag:false,
             user:{},
+            //图片预览功能的实现
+            img:null,
 
         },
         mounted(){
@@ -220,7 +231,7 @@
             //添加准备
             toAdd(){
                 //帮助表单输入初始化
-                this.role = {};
+                this.user = {};
                 this.addFlag=true;
             },
             //添加车辆
@@ -268,6 +279,21 @@
                             })
                     }
                 });
+            },
+
+            //获得上传的图片(图片预览)
+            doBeforeUpload(file){
+                const reader = new FileReader();
+                reader.readAsDataURL(file);
+                reader.onloadend = () => {
+                    this.img = reader.result;
+                }
+            },
+            //上传工作照成功提示
+            uploadSuccess(response){
+                console.log(response);  //上传工作照会返回一个图片的信息
+                this.user.attachPath=response.result.attachPath;  //给需要修改的数据库指定的数据赋值
+                iview.Message.success("上传成功！");
             },
 
         },
