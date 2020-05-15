@@ -22,8 +22,6 @@ import java.util.List;
 @Service
 public class UserServiceImpl extends ServiceImpl<UserMapper,User> implements UserService {
 
-    @Resource
-    private UserMapper userMapper;
 
     @Override
     public List<User> selectByList() {
@@ -40,24 +38,24 @@ public class UserServiceImpl extends ServiceImpl<UserMapper,User> implements Use
 
         //封装分页查询
         Page page = new Page(pageNo,pageSize);
-        List<User> list = userMapper.findAll(page,query);
+        List<User> list = baseMapper.findAll(page,query);
 
         return new PageResult(list,page.getTotal());
     }
 
     @Override
     public void doAdd(User user) {
-        userMapper.insert(user);
+        baseMapper.insert(user);
     }
 
     @Override
     public void doUpdate(User user) {
-        userMapper.updateById(user);
+        baseMapper.updateById(user);
     }
 
     @Override
     public void del(Integer id) {
-        userMapper.deleteById(id);
+        baseMapper.deleteById(id);
     }
 
     @Override

@@ -31,7 +31,7 @@ public class IndexController {
         Subject subject = SecurityUtils.getSubject();
         User user = (User) subject.getPrincipal();
         Session session = subject.getSession();
-        session.setAttribute(Constants.LoginName,user);
+        session.setAttribute(Constants.USER_SESSION,user);
         List<Menu> permissionList = permissionService.searchMenuList();
         model.addAttribute("menuList",permissionList);
         return "index";

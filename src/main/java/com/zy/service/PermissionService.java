@@ -12,7 +12,7 @@ import java.util.List;
  */
 public interface PermissionService extends IService<Menu> {
     List<TreeNodeVo> searchTreeNode(Integer id);//查询所有的权限
-    public List<String> searchPermByRoleId(String roleId);
+    public List<String> searchPermByRoleId(Integer roleId);
 
     //查找菜单
     List<Menu> searchMenuList();

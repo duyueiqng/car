@@ -30,7 +30,7 @@ public class RoleController {
     @PostMapping("/add")
     public ResultVo addRole(@RequestBody Role role, HttpSession session){
         try {
-            User user = (User) session.getAttribute(Constants.LoginName);
+            User user = (User) session.getAttribute(Constants.USER_SESSION);
             roleService.addRole(role);
             return ResultVo.success("增加角色成功");
         }catch (Exception e){

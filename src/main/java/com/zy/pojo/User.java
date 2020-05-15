@@ -4,6 +4,7 @@ package com.zy.pojo;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -39,6 +40,7 @@ public class User {
 	/**
 	 * 生日
 	 */
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	@JsonFormat(pattern = "yyyy-MM-dd")
 	private LocalDate birthday;
 
@@ -50,7 +52,7 @@ public class User {
 	/**
 	 * 用户角色
 	 */
-	private String userRole;
+	private Integer userRole;
 
 	/**
 	 * 手机号
@@ -70,6 +72,7 @@ public class User {
 	/**
 	 * 创建时间
 	 */
+	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm")
 	@JsonFormat(pattern = "yyyy-MM-dd HH:mm")
 	private LocalDateTime createdate;
 
@@ -89,6 +92,7 @@ public class User {
 	 */
 	@TableField(exist = false)
 	private Role role;
+
 
 
 
