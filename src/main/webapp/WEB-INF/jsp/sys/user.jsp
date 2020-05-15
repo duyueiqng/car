@@ -253,6 +253,8 @@
             },
             //修改
             doUpdate(row){
+                this.user.birthday=moment(this.user.birthday).format("yyyy-MM-dd");
+                this.user.createdate=moment(this.user.createdate).format("yyyy-MM-dd HH:mm");
                 console.log(this.user);
                 axios.post(`${ctx}/sys/user/doUpdate`,this.user)
                     .then(({data})=>{

@@ -231,6 +231,7 @@
             },
             //修改车辆
             doUpdate(row){
+                this.car.createtime=moment(this.car.createtime).format("yyyy-MM-dd HH:mm");
                 axios.post(`${ctx}/sys/car/doUpdate`,this.car)
                     .then(({data})=>{
                         iview.Message.success({content:data.msg});

@@ -96,6 +96,7 @@
                 this.updateFlag=true;
             },
             update(){
+                this.role.createdate=moment(this.role.createdate).format("yyyy-MM-dd HH:mm");
                 axios.post(`${ctx}/sys/role/update`,this.role)
                     .then(({data})=>{
                         this.updateFlag=false;
