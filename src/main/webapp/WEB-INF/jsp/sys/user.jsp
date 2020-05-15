@@ -32,7 +32,7 @@
         </Panel>
         <card>
             <i-button type="success" @click="toAdd">添加用户</i-button>
-            <i-button type="primary" @click="toGraint">角色授权</i-button>
+            <i-button type="primary" >角色授权</i-button>
         </card>
 
     </Collapse>
@@ -51,7 +51,7 @@
             <i-button type="error" @click="del(row)" >刪除</i-button>
         </template>
     </i-table>
-    <modal v-model="graideFlag" title="角色授权" @on-ok="graint">
+    <modal v-model="graideFlag" title="角色授权">
         <card>
             授权对象:&nbsp;&nbsp;&nbsp;
         </card>
@@ -64,7 +64,7 @@
 
     <%--弹框消息:增加弹框代码--%>
     <Modal v-model="addFlag" title="增加客户信息" @on-ok="doAdd">
-        <i-form :model="forItem" inline :label-width="60">
+        <i-form  inline :label-width="60">
             <form-item label="编号">
                 <i-input v-model="user.usercode"/>
             </form-item>
@@ -109,7 +109,7 @@
 
     <%--弹框消息:修改弹框代码--%>
     <Modal v-model="updateFlag" title="修改客户信息" @on-ok="doUpdate">
-        <i-form :model="forItem" inline :label-width="60">
+        <i-form  inline :label-width="60">
             <form-item label="编号">
                 <i-input v-model="user.usercode"/>
             </form-item>
@@ -125,7 +125,7 @@
                 </template>
             </form-item>
             <form-item label="生日">
-                <Date-Picker v-model="user.birthday" type="date" format="yyyy-MM-dd"  @on-change="user.birthday=$event"></Date-Picker>
+                <Date-Picker :value="user.birthday" type="date" format="yyyy-MM-dd"  @on-change="user.birthday=$event"></Date-Picker>
             </form-item>
             <form-item label="身份信息">
                 <i-input v-model="user.idCard"/>
@@ -136,10 +136,6 @@
             <form-item label="地区">
                 <i-input v-model="user.address"/>
             </form-item>
-            <form-item label="创建日期">
-                <Date-Picker v-model="user.createdate" type="datetime" format="yyyy-MM-dd HH:mm"  @on-change="user.createdate=$event"></Date-Picker>
-            </form-item>
-
         </i-form>
     </Modal>
 
@@ -221,9 +217,10 @@
             toAdd(){
                 //帮助表单输入初始化
                 this.role = {};
+                this.user={};
                 this.addFlag=true;
             },
-            //添加车辆
+            //添加用户
             doAdd(){
                 console.log(this.user);
                 axios.post(`${ctx}/sys/user/doAdd`,this.user)
@@ -241,17 +238,17 @@
                 this.updateFlag=true;
             },
             //修改
-            doUpdate(row){
-                console.log(this.user);
+            doUpdate(){
+                this.user.birthday = moment(this.user.birthday).format("YYYY-MM-DD");
+                this.user.createdate = moment(this.user.createdate).format("YYYY-MM-DD HH:mm");
                 axios.post(`${ctx}/sys/user/doUpdate`,this.user)
-                    .then(({data})=>{
+                        .then(({data})=>{
                         //接收返回添加成功或者添加失败的返回值
                         iview.Message.success({content:data.msg});
                         //刷新数据
                         this.searchUserList();
                     })
             },
-
             //删除用户
             del(row){
                 let _this=this;

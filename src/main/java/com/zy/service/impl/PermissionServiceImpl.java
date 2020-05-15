@@ -45,7 +45,7 @@ public class PermissionServiceImpl extends ServiceImpl<PermissionMapper,Menu> im
     }
 
     @Override
-    public List<String> searchPermByRoleId(String roleId) {
+    public List<String> searchPermByRoleId(Integer roleId) {
         return permissionMapper.searchPermByRoleId(roleId);
     }
 
