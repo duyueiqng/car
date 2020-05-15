@@ -8,7 +8,6 @@
         <association property="role" javaType="com.zy.pojo.Role">
             <id property="id" column="role_id"/>
             <result property="roleName" column="role_name"/>
-
         </association>
     </resultMap>
 
