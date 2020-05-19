@@ -145,6 +145,12 @@
             <form-item label="地区">
                 <i-input v-model="user.address"/>
             </form-item>
+            <form-item label="照片：">
+                <Upload action="sys/user/upload" name="attachPath" :before-upload="doBeforeUpload" :on-success="uploadSuccess">
+                    <i-button icon="ios-cloud-upload-outline">请选择...</i-button>
+                </Upload>
+                <div class="img" :style="{'background-image': 'url(' + img +')'}" v-if="img"></div>
+            </form-item>
             <form-item label="创建日期">
                 <Date-Picker v-model="user.createdate" type="datetime" format="yyyy-MM-dd HH:mm"  @on-change="user.createdate=$event"></Date-Picker>
             </form-item>
