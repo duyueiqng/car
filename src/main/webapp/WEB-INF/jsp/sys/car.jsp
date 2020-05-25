@@ -38,14 +38,8 @@
         <%--</shiro:hasPermission>--%>
     </card>
     <i-table :columns="myColumns" :data="pageResult.rows" border stripe :height="400">
-        <template slot-scope="{row}" slot="gender" >
-            <span>{{row.gender==1?"男":"女"}}</span>
-        </template>
         <template slot-scope="{row}" slot="isFree" >
             <span>{{row.isFree==1?"空闲":"出租"}}</span>
-        </template>
-        <template slot-scope="{row}" slot="roleName" >
-            <span>{{row.role.roleName}}</span>
         </template>
         <template slot-scope="{row}" slot="carImg" >
             <img :src="row.carImg" alt="" width="50">

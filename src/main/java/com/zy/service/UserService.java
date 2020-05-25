@@ -51,4 +51,9 @@ public interface UserService extends IService<User> {
      */
     User findByUsername(String username);
 
+    /**
+     * 归还的user的查询
+     */
+    User findByCard(User user);
+
 }

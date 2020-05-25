@@ -72,4 +72,11 @@ public class CarServiceImpl implements CarService {
     public void del(Integer id) {
         carMapper.deleteById(id);
     }
+
+    @Override
+    public Car findBynum(String carNumber) {
+        LambdaQueryWrapper<Car> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(Car::getCarNumber,carNumber);
+        return carMapper.selectOne(queryWrapper);
+    }
 }

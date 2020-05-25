@@ -1,6 +1,7 @@
 package com.zy.pojo;
 
 
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -49,7 +50,7 @@ public class Renttable {
 	/**
 	 * 是否归还
 	 */
-	private Double rentflag;
+	private Integer rentflag;
 
 	/**
 	 * 用户身份证
@@ -65,6 +66,18 @@ public class Renttable {
 	 * 操作员
 	 */
 	private String userId;
+
+    /**
+     * 车辆信息
+     */
+    @TableField(exist = false)
+    private Car car;
+
+    /**
+     * 客户信息
+     */
+    @TableField(exist = false)
+    private User user;
 
 
 }

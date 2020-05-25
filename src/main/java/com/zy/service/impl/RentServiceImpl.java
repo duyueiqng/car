@@ -39,7 +39,7 @@ public class RentServiceImpl implements RentService {
 
     @Override
     public void updateRent(Renttable renttable) {
-
+        rentMapper.updateById(renttable);
     }
 
     @Override
