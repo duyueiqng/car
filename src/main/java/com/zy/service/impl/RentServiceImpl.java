@@ -44,7 +44,7 @@ public class RentServiceImpl implements RentService {
 
     @Override
     public void addRent(Renttable renttable) {
-
+        rentMapper.insert(renttable);
     }
 
     @Override

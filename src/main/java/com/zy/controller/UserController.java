@@ -28,7 +28,11 @@ public class UserController extends BaseController{
     @Resource
     private UserService userService;
 
-
+    @GetMapping("/getUserByCard")
+    public ResultVo getUserByCard(String idCard){
+        User user = userService.getUserByCard(idCard);
+        return ResultVo.success(user);
+    }
 
     @GetMapping("/page/{pageNo}/{pageSize}")
     public ResultVo pageList(@PathVariable Integer pageNo, @PathVariable Integer pageSize, UserVo userVo){

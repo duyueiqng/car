@@ -64,4 +64,11 @@ public class UserServiceImpl extends ServiceImpl<UserMapper,User> implements Use
         wrapper.eq(User::getUsercode,username);
         return super.getOne(wrapper);
     }
+
+    @Override
+    public User getUserByCard(String idCard) {
+        LambdaQueryWrapper<User> wrapper = Wrappers.<User>lambdaQuery();
+        wrapper.eq(User::getIdCard,idCard);
+        return super.getOne(wrapper);
+    }
 }
