@@ -42,4 +42,9 @@ public interface CarService {
      * 删除
      */
     void del(Integer id);
+
+    /**
+     * 归还的信息查询
+     */
+    Car findBynum(String carNumber);
 }

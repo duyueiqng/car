@@ -1,21 +1,13 @@
 package com.zy.pojo;
 
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableId;
 import com.fasterxml.jackson.annotation.JsonFormat;
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 
-
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
 public class Renttable {
 
-	@TableId(value = "id",type = IdType.UUID)
 	private String id;
 
 	/**
@@ -36,23 +28,23 @@ public class Renttable {
 	/**
 	 * 开始日期
 	 */
-	@JsonFormat(pattern = "yyyy-MM-dd HH:mm")
 	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm")
-	private java.time.LocalDateTime beginDate;
+	@JsonFormat(pattern = "yyyy-MM-dd HH:mm")
+	private java.util.Date beginDate;
 
 	/**
 	 * 到期日期
 	 */
-	@JsonFormat(pattern = "yyyy-MM-dd HH:mm")
 	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm")
-	private java.time.LocalDateTime shouldReturnDate;
+	@JsonFormat(pattern = "yyyy-MM-dd HH:mm")
+	private java.util.Date shouldReturnDate;
 
 	/**
 	 * 归还日期
 	 */
-	@JsonFormat(pattern = "yyyy-MM-dd HH:mm")
 	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm")
-	private java.time.LocalDateTime returnDate;
+	@JsonFormat(pattern = "yyyy-MM-dd HH:mm")
+	private java.util.Date returnDate;
 
 	/**
 	 * 是否归还
@@ -60,7 +52,7 @@ public class Renttable {
 	private Double rentflag;
 
 	/**
-	 * 用户身份证
+	 * 身份证
 	 */
 	private String custId;
 

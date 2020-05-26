@@ -52,9 +52,14 @@ public interface UserService extends IService<User> {
     User findByUsername(String username);
 
     /**
-     * 通过身份证号查找用户
+     * 归还的user的查询
+     */
+    User findByCard(User user);
+
+    /**
+     * 通过身份证得到用户
      * @param idCard
      * @return
      */
-    User getUserByCard(String idCard);
+    public User getUserByCard(String idCard);
 }

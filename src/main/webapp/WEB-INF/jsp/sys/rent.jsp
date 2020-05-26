@@ -35,13 +35,13 @@
         </template>
 
         <template slot-scope="{row,index}" slot="action">
-            <%--<shiro:hasPermission name="user:update">--%>
-                <i-button type="warning" @click="toUpdate(row)" >编辑</i-button>
-            <%--</shiro:hasPermission>--%>
-
-            <%--<shiro:hasPermission name="user:del">--%>
+            <span v-if="row.rentflag==1">
+                <i-button type="warning" @click="toUpdate(row)" >打印出租单</i-button>
+            </span>
+            <span v-else>
+                <i-button type="error" @click="toUpdate(row)" >编辑</i-button>
                 <i-button type="error" @click="del(row)" >刪除</i-button>
-            <%--</shiro:hasPermission>--%>
+            </span>
         </template>
     </i-table>
 
@@ -49,32 +49,32 @@
     <%--弹框消息:编辑弹框代码--%>
     <Modal v-model="updateFlag" title="租赁订单" @on-ok="doUpdate">
         <i-form inline :label-width="60">
-            <form-item label="车牌号">
-                <i-input v-model="car.carNumber"/>
+            <form-item label="订单编号">
+                <i-input v-model="rent.id"/>
             </form-item>
-            <form-item label="车型">
-                <i-input v-model="car.carType"/>
+            <form-item label="身份信息">
+                <i-input v-model="rent.numCard"/>
             </form-item>
-            <form-item label="车辆颜色">
-                <i-input v-model="car.carColor"/>
+            <form-item label="车俩">
+                <i-input v-model="rent.carId"/>
             </form-item>
-            <form-item label="车辆价格">
-                <i-input v-model="car.carPrice"/>
+            <form-item label="状态">
+                <i-input v-model="rent.rentflag"/>
             </form-item>
-            <form-item label="介绍">
-                <i-input v-model="car.carDemp"/>
+            <form-item label="预付款">
+                <i-input v-model="rent.imprest"/>
             </form-item>
-            <form-item label="租赁价格">
-                <i-input v-model="car.rentprice"/>
+            <form-item label="出库时间">
+                <i-input v-model="rent.beginDate"/>
             </form-item>
-            <form-item label="租赁押金">
-                <i-input v-model="car.deposit"/>
+            <form-item label="到租时间">
+                <i-input v-model="rent.shouldReturnDate"/>
             </form-item>
-            <form-item label="工作照：">
-                <Upload action="sys/car/upload" name="carImg" :before-upload="doBeforeUpload" :on-success="uploadSuccess">
-                    <i-button icon="ios-cloud-upload-outline">请选择...</i-button>
-                </Upload>
-                <div class="img" :style="{'background-image': 'url(' + img +')'}" v-if="img"></div>
+            <form-item label="入库时间">
+                <i-input v-model="rent.returnDate"/>
+            </form-item>
+            <form-item label="操作员">
+                <i-input v-model="rent.userId"/>
             </form-item>
         </i-form>
     </Modal>
@@ -130,6 +130,7 @@
             updateFlag:false,
             //添加存放
             car:{},
+            rent:{},
             //图片预览功能的实现
             img:null,
 
@@ -171,7 +172,7 @@
             //修改准备
             toUpdate(row){
                 //这句表示这一条数据是点击的数据
-                this.car = row;
+                this.rent = row;
                 console.log(this.car);
                 this.updateFlag=true;
             },
