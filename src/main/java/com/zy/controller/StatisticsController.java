@@ -22,7 +22,7 @@ public class StatisticsController {
     @GetMapping("/statists/carlist")
     public ResultVo getCarList(@RequestParam("year") String year, @RequestParam("month") String month, HttpServletRequest request){
         System.out.println(year+month+"---");
-        List<Car> carList = statisticsService.getCarListByYearMonth(year,month);
+        List<Double> carList = statisticsService.getCarListByYearMonth(year,month);
         System.out.println(carList.toString());
         request.setAttribute("year",year);
         return  ResultVo.success(carList);

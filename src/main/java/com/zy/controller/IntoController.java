@@ -39,7 +39,7 @@ public class IntoController {
     @GetMapping("/select")
     public ResultVo findok(Renttable renttable){
         String msg = "系统错误!";
-        int id = renttable.getId();
+        String id = renttable.getId();
         Renttable renttable1 = intoService.findHave(id);
         if (renttable1==null){
             msg="暂无此订单,请核对后重试!";
@@ -87,7 +87,7 @@ public class IntoController {
         System.out.println("归还接收:"+returnVo);
         Renttable renttable = new Renttable();
         renttable.setId(returnVo.getRentId());
-        renttable.setRentflag(1);
+        renttable.setRentflag(1.0);
         Car car = new Car();
         car.setIsFree(1);
         car.setId(returnVo.getCarid());

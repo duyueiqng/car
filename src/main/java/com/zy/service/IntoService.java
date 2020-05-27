@@ -12,7 +12,7 @@ public interface IntoService {
      * @param id
      * @return
      */
-    Renttable findHave(Integer id);
+    Renttable findHave(String id);
 
     /**
      *

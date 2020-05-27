@@ -63,57 +63,26 @@
 		Highcharts.chart('container', {
 
 			title : {
-				text : '${year } 年 各 月 份 汽 车 未  还 情 况'
+				text: '公司年度销售额统计',
+				x:'center'
 			},
-
-			//副标题
-			subtitle : {
-				text : '资源: MYSQL'
-			},
-            // y 轴标题
-			yAxis : {
-				title : {
-					text : '数量'
+			tooltip : {
+				trigger: 'axis',
+				axisPointer : {            // 坐标轴指示器，坐标轴触发有效
+					type : 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
 				}
 			},
-            xAxis : {
-                categories: ['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月'],
-                plotbands:[{//可以显示一个方块，如果需要的话可以更改透明度和颜色
-                    from:4.5,
-                    to:6.5,
-                    // color:rgba(68,170,213,0)//透明度和颜色
-       		 }],
-            },
-			// legend : {
-			// 	layout : 'vertical',
-			// 	align : 'right',
-			// 	verticalAlign : 'middle'
-			// },
-
-
-			// 数据列 [{},{}] json格式
-			<%--series : ${strformat},--%>
-            series: [{                              // 数据列
-                name: '小明',                        // 数据列名
-                data: [1, 0, 4]                     // 数据
-            }, {
-                name: '小红',
-                data: [5, 7, 3,6,7,8,8,8,8,1,2,2]
-            }],
-			// responsive : {
-			// 	rules : [ {
-			// 		condition : {
-			// 			// maxWidth : 500
-			// 		},
-			// 		chartOptions : {
-			// 			legend : {
-			// 				layout : 'horizontal',
-			// 				align : 'center',
-			// 				verticalAlign : 'bottom'
-			// 			}
-			// 		}
-			// 	} ]
-			// }
+			xAxis: {
+				type: 'category',
+				data: ['一月', '二月', '三月', '四月', '五月', '六月', '七月','八月','九月','十月','十一月','十二月']
+			},
+			yAxis: {
+				type: 'value'
+			},
+			series: [{
+				data: data,
+				type: 'line'
+			}]
 
 		});
 	</script>

@@ -19,7 +19,7 @@ public class IntoServiceImpl implements IntoService {
 
 
     @Override
-    public Renttable findHave(Integer id) {
+    public Renttable findHave(String id) {
         return rentMapper.selectById(id);
     }
 }

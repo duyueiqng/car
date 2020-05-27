@@ -7,6 +7,55 @@
     <select id="selectByList" resultType="com.zy.pojo.Car">
         select * from car
     </select>
+    <!-- 查询公司年度统计数据 -->
+    <select id="getCarListByYearMonth"  resultType="java.lang.Double">
+        select sum(price) from renttable where
+        DATE_FORMAT(begin_date,"%Y%m")=concat(#{year},'01')
+        UNION all
+        select
+        sum(price) from renttable where
+        DATE_FORMAT(begin_date,"%Y%m")=concat(#{year},'02')
+        UNION all
+        select
+        sum(price) from renttable where
+        DATE_FORMAT(begin_date,"%Y%m")=concat(#{year},'03')
+        UNION all
+        select
+        sum(price) from renttable where
+        DATE_FORMAT(begin_date,"%Y%m")=concat(#{year},'04')
+        UNION all
+        select
+        sum(price) from renttable where
+        DATE_FORMAT(begin_date,"%Y%m")=concat(#{year},'05')
+        UNION all
+        select
+        sum(price) from renttable where
+        DATE_FORMAT(begin_date,"%Y%m")=concat(#{year},'06')
+        UNION all
+        select
+        sum(price) from renttable where
+        DATE_FORMAT(begin_date,"%Y%m")=concat(#{year},'07')
+        UNION all
+        select
+        sum(price) from renttable where
+        DATE_FORMAT(begin_date,"%Y%m")=concat(#{year},'08')
+        UNION all
+        select
+        sum(price) from renttable where
+        DATE_FORMAT(begin_date,"%Y%m")=concat(#{year},'09')
+        UNION all
+        select
+        sum(price) from renttable where
+        DATE_FORMAT(begin_date,"%Y%m")=concat(#{year},'10')
+        UNION all
+        select
+        sum(price) from renttable where
+        DATE_FORMAT(begin_date,"%Y%m")=concat(#{year},'11')
+        UNION all
+        select
+        sum(price) from renttable where
+        DATE_FORMAT(begin_date,"%Y%m")=concat(#{year},'12')
 
+    </select>
 
 </mapper>
