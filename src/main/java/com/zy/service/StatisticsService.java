@@ -10,4 +10,6 @@ import java.util.List;
  */
 public interface StatisticsService {
     List<Double> getCarListByYearMonth(String year, String month);
+
+    List<Double> getUserByYearMonth(String year, String userId);
 }

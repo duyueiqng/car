@@ -8,7 +8,7 @@
         select * from car
     </select>
     <!-- 查询公司年度统计数据 -->
-    <select id="getCarListByYearMonth"  resultType="java.lang.Double">
+    <select id="getCarListByYearMonth"  resultType="java.lang.Integer">
         select sum(price) from renttable where
         DATE_FORMAT(begin_date,"%Y%m")=concat(#{year},'01')
         UNION all
@@ -55,6 +55,56 @@
         select
         sum(price) from renttable where
         DATE_FORMAT(begin_date,"%Y%m")=concat(#{year},'12')
+
+    </select>
+    <!-- 查询公司年度统计数据 -->
+    <select id="getUserByYearMonth"  resultType="java.lang.Integer">
+        select sum(price) from renttable where
+        DATE_FORMAT(begin_date,"%Y%m")=concat(#{year},'01') and user_Id=#{userId}
+        UNION all
+        select
+        sum(price) from renttable where
+        DATE_FORMAT(begin_date,"%Y%m")=concat(#{year},'02') and user_Id=#{userId}
+        UNION all
+        select
+        sum(price) from renttable where
+        DATE_FORMAT(begin_date,"%Y%m")=concat(#{year},'03') and user_Id=#{userId}
+        UNION all
+        select
+        sum(price) from renttable where
+        DATE_FORMAT(begin_date,"%Y%m")=concat(#{year},'04') and user_Id=#{userId}
+        UNION all
+        select
+        sum(price) from renttable where
+        DATE_FORMAT(begin_date,"%Y%m")=concat(#{year},'05') and user_Id=#{userId}
+        UNION all
+        select
+        sum(price) from renttable where
+        DATE_FORMAT(begin_date,"%Y%m")=concat(#{year},'06') and user_Id=#{userId}
+        UNION all
+        select
+        sum(price) from renttable where
+        DATE_FORMAT(begin_date,"%Y%m")=concat(#{year},'07') and user_Id=#{userId}
+        UNION all
+        select
+        sum(price) from renttable where
+        DATE_FORMAT(begin_date,"%Y%m")=concat(#{year},'08') and user_Id=#{userId}
+        UNION all
+        select
+        sum(price) from renttable where
+        DATE_FORMAT(begin_date,"%Y%m")=concat(#{year},'09') and user_Id=#{userId}
+        UNION all
+        select
+        sum(price) from renttable where
+        DATE_FORMAT(begin_date,"%Y%m")=concat(#{year},'10') and user_Id=#{userId}
+        UNION all
+        select
+        sum(price) from renttable where
+        DATE_FORMAT(begin_date,"%Y%m")=concat(#{year},'11') and user_Id=#{userId}
+        UNION all
+        select
+        sum(price) from renttable where
+        DATE_FORMAT(begin_date,"%Y%m")=concat(#{year},'12') and user_Id=#{userId}
 
     </select>
 

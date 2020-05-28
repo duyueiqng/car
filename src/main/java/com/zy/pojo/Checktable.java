@@ -8,7 +8,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 @Data
 public class Checktable {
 
-	private Integer id;
+	private Integer checkId;
 
 	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm")
 	@JsonFormat(pattern = "yyyy-MM-dd HH:mm")
@@ -19,16 +19,19 @@ public class Checktable {
 	 */
 	private String field;
 
+	/**
+	 * 问题
+	 */
 	private String problem;
 
 	/**
-	 * 是否盈利
+	 * 赔偿金额
 	 */
 	private Double paying;
 
 	private String checkUserId;
 
-	private Integer rentId;
+	private String rentId;
 
 
 }

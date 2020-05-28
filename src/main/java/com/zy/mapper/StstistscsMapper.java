@@ -1,8 +1,6 @@
 package com.zy.mapper;
 
-import com.zy.pojo.Car;
 import org.apache.ibatis.annotations.Param;
-import org.apache.ibatis.annotations.Select;
 
 import java.util.List;
 
@@ -13,4 +11,5 @@ import java.util.List;
 public interface StstistscsMapper {
 
     List<Double> getCarListByYearMonth(@Param("year") String year,@Param("month") String month);
+    List<Double> getUserByYearMonth(@Param("year") String year,@Param("userId") String userId);
 }

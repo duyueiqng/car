@@ -2,7 +2,7 @@
 <%@ taglib prefix="shiro" uri="http://shiro.apache.org/tags" %>
 <html>
 <head>
-    <title>员工管理</title>
+    <title>汽车出库管理</title>
     <%@include file="/common/head.jsp"%>
 </head>
 
@@ -53,9 +53,9 @@
     <Modal v-model="Return" title="归还信息" @on-ok="doReturn(row)" :width="60">
         <template>
             <div class="demo-split">
-                <Split v-model="split3">
+                <Split >
                     <div slot="left" class="demo-split-pane no-padding">
-                        <Split v-model="split4" mode="vertical">
+                        <Split  mode="vertical">
                             <div slot="top" class="demo-split-pane">
                                 <h3>车辆信息</h3>
                                 <p>车牌号:{{car.carNumber}}</p>
@@ -86,7 +86,7 @@
                         <p>(计算:退付=压赁金额-赔付金额)</p>
                         <p>请输入盈利金额完成订单:</p>
 
-                        <i-form :model="forItem" inline :label-width="60">
+                        <i-form  inline :label-width="60">
                             <form-item label="money:">
                                 <i-input v-model="car.rentprice"/>
                             </form-item>

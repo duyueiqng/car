@@ -4,9 +4,12 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.zy.mapper.CheckTableMapper;
 import com.zy.pojo.Checktable;
 import com.zy.service.CheckTableService;
+import com.zy.vo.CheckedVo;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * @author dyqstart
@@ -20,9 +23,20 @@ public class CheckTableServiceImpl implements CheckTableService {
 
 
     @Override
-    public Checktable findByRent(Integer rentId) {
+    public Checktable findByRent(String rentId) {
         LambdaQueryWrapper<Checktable> queryWrapper = new LambdaQueryWrapper<>();
         queryWrapper.eq(Checktable::getRentId,rentId);
         return checkTableMapper.selectOne(queryWrapper);
+    }
+
+    @Override
+    public List<Checktable> findCheckByCondition(CheckedVo checkedVo) {
+        LambdaQueryWrapper<Checktable> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(checkedVo.getCheckId()!=null,Checktable::getRentId,checkedVo.getCheckId())
+            .eq(checkedVo.getRentId()!=null,Checktable::getRentId,checkedVo.getRentId())
+            .like(!StringUtils.isEmpty(checkedVo.getProblem()),Checktable::getProblem,checkedVo.getProblem())
+            .ge(checkedVo.getStartTime()!=null,Checktable::getCheckDate,checkedVo.getStartTime())
+            .le(checkedVo.getEndTime()!=null,Checktable::getCheckDate,checkedVo.getEndTime());
+        return checkTableMapper.selectList(queryWrapper);
     }
 }

@@ -2,12 +2,14 @@ package com.zy.controller;
 
 import com.zy.pojo.Checktable;
 import com.zy.service.CheckTableService;
+import com.zy.vo.CheckedVo;
 import com.zy.vo.ResultVo;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * @author dyqstart
@@ -23,16 +25,19 @@ public class CheckController {
 
     @GetMapping("/select")
     public ResultVo select(Checktable checktable){
-        Integer id = checktable.getRentId();
+        String id = checktable.getRentId();
         System.out.println("要查询的订单号码(违规):"+id);
         Checktable checktable1 = checkTableService.findByRent(id);
         System.out.println(checktable1);
         return ResultVo.success(checktable1);
-
-
-
     }
 
+    @GetMapping("/searchCheckedList")
+    public ResultVo searchCheckedList(CheckedVo checkedVo){
+        List<Checktable> checktableList = checkTableService.findCheckByCondition(checkedVo);
+        System.out.println(checktableList.toString());
+        return ResultVo.success(checktableList);
+    }
 
 
 }
