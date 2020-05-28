@@ -31,7 +31,7 @@
     </Collapse>
     <i-table :columns="myColumns" :data="pageResult.rows" border stripe :height="400">
         <template slot-scope="{row}" slot="rentflag" >
-            <span>{{row.rentflag==1?"已完成":"使用中"}}</span>
+            <span>{{row.rentflag==1?"使用中":"已完成"}}</span>
         </template>
 
         <template slot-scope="{row,index}" slot="action">

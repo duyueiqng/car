@@ -11,7 +11,7 @@ public interface CheckTableService {
     /**
      * 根据订单号查询相应的违规信息
      */
-    Checktable findByRent(Integer rentId);
+    Checktable findByRent(String rentId);
 
 
 

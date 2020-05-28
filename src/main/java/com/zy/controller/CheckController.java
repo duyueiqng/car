@@ -23,7 +23,7 @@ public class CheckController {
 
     @GetMapping("/select")
     public ResultVo select(Checktable checktable){
-        Integer id = checktable.getRentId();
+        String id = checktable.getRentId();
         System.out.println("要查询的订单号码(违规):"+id);
         Checktable checktable1 = checkTableService.findByRent(id);
         System.out.println(checktable1);

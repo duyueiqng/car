@@ -20,7 +20,7 @@ public class CheckTableServiceImpl implements CheckTableService {
 
 
     @Override
-    public Checktable findByRent(Integer rentId) {
+    public Checktable findByRent(String rentId) {
         LambdaQueryWrapper<Checktable> queryWrapper = new LambdaQueryWrapper<>();
         queryWrapper.eq(Checktable::getRentId,rentId);
         return checkTableMapper.selectOne(queryWrapper);

@@ -41,7 +41,7 @@
 
     <i-table ref="table" :columns="myColumns" :data="myData" border stripe :height="400">
         <template slot-scope="{row}" slot="rentflag" >
-            <span>{{row.rentflag==1?"已完成":"使用中"}}</span>
+            <span>{{row.rentflag==1?"使用中":"已完成"}}</span>
         </template>
         <template slot-scope="{row,index}" slot="action">
             <i-button type="warning" @click="toReturn(row)" >归还</i-button>
@@ -109,7 +109,7 @@
             //表格数据
             myColumns:[
                 {key:"id",title:"订单编号"},
-                {key:"numCard",title:"身份信息"},
+                {key:"custId",title:"身份信息"},
                 {key:"carId",title:"车辆"},
                 {slot:"rentflag",title:"状态"},
                 {key:"imprest",title:"预付款"},
@@ -177,7 +177,7 @@
                         this.car=data.result;
                     });
                 //查询客户信息
-                this.user.idCard=row.numCard;
+                this.user.idCard=row.custId;
                 axios.get(`${ctx}/sys/rent/user`,{params:this.user})
                     .then(({data})=>{
                         console.log(data);
