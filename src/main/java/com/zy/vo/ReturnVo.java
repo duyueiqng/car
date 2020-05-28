@@ -9,7 +9,7 @@ import lombok.Data;
 @Data
 public class ReturnVo {
 
-    private Integer rentId; //租赁单据id
+    private String rentId; //租赁单据id
 
     private Integer carid;  //车辆id
 }

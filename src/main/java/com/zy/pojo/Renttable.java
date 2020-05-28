@@ -49,7 +49,7 @@ public class Renttable {
 	/**
 	 * 是否归还
 	 */
-	private Double rentflag;
+	private Integer rentflag;
 
 	/**
 	 * 身份证

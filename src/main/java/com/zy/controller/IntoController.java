@@ -11,7 +11,6 @@ import com.zy.vo.CarVo;
 import com.zy.vo.ResultVo;
 import com.zy.vo.ReturnVo;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -39,7 +38,7 @@ public class IntoController {
     @GetMapping("/select")
     public ResultVo findok(Renttable renttable){
         String msg = "系统错误!";
-        int id = renttable.getId();
+        String id = renttable.getId();
         Renttable renttable1 = intoService.findHave(id);
         if (renttable1==null){
             msg="暂无此订单,请核对后重试!";
