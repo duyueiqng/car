@@ -9,5 +9,5 @@ import java.util.List;
  * @date 2020/5/25 - 10:49
  */
 public interface StatisticsService {
-    List<Car> getCarListByYearMonth(String year, String month);
+    List<Double> getCarListByYearMonth(String year, String month);
 }

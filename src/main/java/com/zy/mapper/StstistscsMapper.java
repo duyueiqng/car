@@ -11,7 +11,6 @@ import java.util.List;
  * @date 2020/5/25 - 10:46
  */
 public interface StstistscsMapper {
-    @Select("select * from car ,renttable   where car.car_number=renttable.car_Id and YEAR(renttable.should_return_date) = #{year} AND MONTH(renttable.should_return_date) = #{month}\n" +
-            "and return_date is NULL")
-    List<Car> getCarListByYearMonth(@Param("year") String year,@Param("month") String month);
+
+    List<Double> getCarListByYearMonth(@Param("year") String year,@Param("month") String month);
 }

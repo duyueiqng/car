@@ -18,7 +18,7 @@ public class StaticsServiceImpl implements StatisticsService {
     StstistscsMapper ststistscsMapper;
 
     @Override
-    public List<Car> getCarListByYearMonth(String year, String month) {
+    public List<Double> getCarListByYearMonth(String year, String month) {
         return ststistscsMapper.getCarListByYearMonth(year,month);
     }
 }
