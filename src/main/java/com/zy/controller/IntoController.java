@@ -43,7 +43,7 @@ public class IntoController {
         Renttable renttable1 = intoService.findHave(id);
         if (renttable1==null){
             msg="暂无此订单,请核对后重试!";
-        }else if(renttable1.getRentflag()==1){
+        }else if(renttable1.getRentflag()==1.0){
             msg="此订单交易已完成,谢谢您的使用!";
         }else{
             List<Renttable> list = new ArrayList<>();
