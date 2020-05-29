@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 public class LoinController {
     @GetMapping({"/login","/"})
     public String toLogin(){
-        return "login";
+        return "sys/login/login";
     }
     @PostMapping("/login")
     public String login(String username,String password){

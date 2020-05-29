@@ -34,7 +34,7 @@ public class IndexController {
         session.setAttribute(Constants.USER_SESSION,user);
         List<Menu> permissionList = permissionService.searchMenuList();
         model.addAttribute("menuList",permissionList);
-        return "index";
+        return "sys/menu/index";
     }
 
 

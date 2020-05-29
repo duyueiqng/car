@@ -12,9 +12,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 @Controller
 public class ForwardController {
 
-    @GetMapping("/{folder}/{page}/index")
-    public String index(@PathVariable("folder") String folder,@PathVariable("page") String page){
-        return folder+"/"+page;
+    @GetMapping("/{folder1}/{folder2}/{page}/index")
+    public String index(@PathVariable("folder1") String folder1,@PathVariable("folder2") String folder2,@PathVariable("page") String page){
+        return folder1+"/"+folder2+"/"+page;
     }
 
 

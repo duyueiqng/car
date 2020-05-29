@@ -49,6 +49,7 @@ public class CarController {
     //添加新车辆
     @PostMapping("/doAdd")
     public ResultVo doAdd(@RequestBody Car car){
+        car.setIsFree(1);
         System.out.println("请求添加的车俩:"+car.getCarNumber());
         String msg = "添加新车辆失败!";
         try {

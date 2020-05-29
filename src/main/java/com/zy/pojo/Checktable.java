@@ -3,44 +3,34 @@ package com.zy.pojo;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
+import org.springframework.format.annotation.DateTimeFormat;
 
 @Data
 public class Checktable {
 
-	/**
-	 * id
-	 */
 	private Integer checkId;
 
-	/**
-	 * 检查时间
-	 */
+	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm")
 	@JsonFormat(pattern = "yyyy-MM-dd HH:mm")
 	private java.time.LocalDateTime checkDate;
 
 	/**
-	 * 评价
+	 * 反馈，评价
 	 */
 	private String field;
 
 	/**
-	 * 检查问题
+	 * 问题
 	 */
 	private String problem;
 
 	/**
-	 * 违约金
+	 * 赔偿金额
 	 */
-	private Integer payIng;
+	private Double paying;
 
-	/**
-	 * 检查员
-	 */
 	private String checkUserId;
 
-	/**
-	 * 租车Id
-	 */
 	private String rentId;
 
 
