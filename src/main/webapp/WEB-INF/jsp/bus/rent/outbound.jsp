@@ -122,10 +122,10 @@
                 axios.post(`${ctx}/sys/rent/doAdd`,Qs.parse(params))
                     .then(({data})=>{
                         if (data.code=2000){
-                            iview.Message.success({content:data.content});
+                            iview.Message.success({content:data.msg});
                             this.renttable=null;
                         }else {
-                            iview.Message.error({content:data.content});
+                            iview.Message.error({content:data.msg});
                         }
                     })
             },

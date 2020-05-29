@@ -4,9 +4,7 @@ import com.zy.pojo.Checktable;
 import com.zy.service.CheckTableService;
 import com.zy.vo.CheckedVo;
 import com.zy.vo.ResultVo;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -39,5 +37,42 @@ public class CheckController {
         return ResultVo.success(checktableList);
     }
 
+    @PostMapping("/updateChecked")
+    public ResultVo updateChecked(@RequestBody Checktable checktable){
+        String msg = "修改检查表失败!";
+        try{
+            msg="修改检查表成功!";
+            System.out.println(checktable.toString());
+            checkTableService.updateChecked(checktable);
+            return ResultVo.success(msg);
+        }catch (Exception e){
+            return ResultVo.success(msg);
+        }
+    }
+    @PostMapping("/addChecked")
+    public ResultVo addChecked(@RequestBody Checktable checktable){
+        String msg = "增加检查表失败!";
+        try{
+            msg="增加检查表成功!";
+            System.out.println(checktable.toString());
+            checkTableService.addChecked(checktable);
+            return ResultVo.success(msg);
+        }catch (Exception e){
+            return ResultVo.success(msg);
+        }
+    }
+
+    @GetMapping("/del")
+    public ResultVo delChecked(Integer checkedId){
+        String msg = "删除检查表失败!";
+        try{
+            msg="删除检查表成功!";
+            System.out.println(checkedId+"----");
+            checkTableService.deleteCheckedById(checkedId);
+            return ResultVo.success(msg);
+        }catch (Exception e){
+            return ResultVo.success(msg);
+        }
+    }
 
 }

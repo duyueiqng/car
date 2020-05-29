@@ -22,4 +22,22 @@ public interface CheckTableService {
      * @return
      */
     List<Checktable> findCheckByCondition(CheckedVo checkedVo);
+
+    /**
+     * 增加检查表
+     * @param checked
+     */
+    void addChecked(Checktable checked);
+
+    /**
+     * 修改检查表
+     * @param checktable
+     */
+    void updateChecked(Checktable checktable);
+
+    /**
+     * 删除检查表通过Id
+     * @param checkedId
+     */
+    void deleteCheckedById(Integer checkedId);
 }

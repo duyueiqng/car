@@ -11,11 +11,13 @@ import com.zy.vo.CarVo;
 import com.zy.vo.ResultVo;
 import com.zy.vo.ReturnVo;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -42,7 +44,7 @@ public class IntoController {
         Renttable renttable1 = intoService.findHave(id);
         if (renttable1==null){
             msg="暂无此订单,请核对后重试!";
-        }else if(renttable1.getRentflag()==0){
+        }else if(renttable1.getRentflag()!=1.0){
             msg="此订单交易已完成,谢谢您的使用!";
         }else{
             List<Renttable> list = new ArrayList<>();
@@ -86,7 +88,8 @@ public class IntoController {
         System.out.println("归还接收:"+returnVo);
         Renttable renttable = new Renttable();
         renttable.setId(returnVo.getRentId());
-        renttable.setRentflag(0);
+        renttable.setRentflag(0.0);
+        renttable.setReturnDate(new Date());
         Car car = new Car();
         car.setIsFree(0);
         car.setId(returnVo.getCarid());

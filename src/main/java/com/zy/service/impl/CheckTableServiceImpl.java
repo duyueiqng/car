@@ -39,4 +39,22 @@ public class CheckTableServiceImpl implements CheckTableService {
             .le(checkedVo.getEndTime()!=null,Checktable::getCheckDate,checkedVo.getEndTime());
         return checkTableMapper.selectList(queryWrapper);
     }
+
+    @Override
+    public void addChecked(Checktable checked) {
+        checkTableMapper.insert(checked);
+    }
+
+    @Override
+    public void updateChecked(Checktable checktable) {
+        System.out.println(checktable.toString());
+        LambdaQueryWrapper<Checktable> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(checktable.getCheckId()!=null,Checktable::getCheckId,checktable.getCheckId());
+        checkTableMapper.update(checktable,queryWrapper);
+    }
+
+    @Override
+    public void deleteCheckedById(Integer checkedId) {
+        checkTableMapper.deleteById(checkedId);
+    }
 }

@@ -41,7 +41,7 @@
 
     <i-table ref="table" :columns="myColumns" :data="myData" border stripe :height="400">
         <template slot-scope="{row}" slot="rentflag" >
-            <span>{{row.rentflag==1?"使用中":"已完成"}}</span>
+            <span>{{row.rentflag!=1.0?"已完成":"使用中"}}</span>
         </template>
         <template slot-scope="{row,index}" slot="action">
             <i-button type="warning" @click="toReturn(row)" >归还</i-button>
@@ -75,15 +75,20 @@
                         </Split>
                     </div>
                     <div slot="right" class="demo-split-pane">
-                        <h3>违规信息:</h3>
-                        <p>违规编号:{{checktable.id}}</p>
-                        <p>违规事项:{{checktable.problem}}</p>
-                        <p>违规时间:{{checktable.checkDate}}</p>
-                        <p>驾驶员:{{checktable.checkUserId}}</p>
-                        <p>相关订单:{{checktable.rentId}}</p>
-                        <p>赔付金额:{{checktable.paying}}</p>
-                        <h2>退付:{{car.deposit}}-{{checktable.paying}}={{car.deposit-checktable.paying}}</h2>
-                        <p>(计算:退付=压赁金额-赔付金额)</p>
+                        <template v-if="checktable==null">
+                            <h3>违规信息为空!</h3>
+                        </template>
+                        <template v-else>
+                            <h3>违规信息:</h3>
+                            <p>违规编号:{{checktable.id}}</p>
+                            <p>违规事项:{{checktable.problem}}</p>
+                            <p>违规时间:{{checktable.checkDate}}</p>
+                            <p>驾驶员:{{checktable.checkUserId}}</p>
+                            <p>相关订单:{{checktable.rentId}}</p>
+                            <p>赔付金额:{{checktable.paying}}</p>
+                            <h2>退付:{{car.deposit}}-{{checktable.paying}}={{car.deposit-checktable.paying}}</h2>
+                            <p>(计算:退付=压赁金额-赔付金额)</p>
+                        </template>
                         <p>请输入盈利金额完成订单:</p>
 
                         <i-form  inline :label-width="60">
@@ -167,6 +172,9 @@
                 axios.get(`${ctx}/sys/checktable/select`,{params:this.checktable})
                     .then(({data})=>{
                         console.log(data);
+                        if (data == null) {
+                            this.checktable=null;
+                        }
                         this.checktable=data.result;
                     });
                 //车辆信息显示
