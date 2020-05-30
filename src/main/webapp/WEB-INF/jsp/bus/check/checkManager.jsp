@@ -248,10 +248,10 @@
                     title:"您确定要删除该记录吗?",
                     content:"改操作不可逆,请谨慎操作.",
                     onOk(){
-                        axios.get(`${ctx}/sys/checktable/del?id=${row.checkId}`)
+                        axios.get(`${ctx}/sys/checktable/del?checkedId=${row.checkId}`)
                             .then(({data})=>{
-                                iview.Message.success({content:data});
-                                this.searchCheckedList();
+                                iview.Message.success({content:msg});
+                                _this.searchCheckedList();
                             })
                     }
                 });

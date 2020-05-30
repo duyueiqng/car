@@ -33,9 +33,9 @@
 
     </Collapse>
     <card>
-       <%--<shiro:hasPermission name="user:add">--%>
-        <i-button type="success" @click="toAdd">添加用户</i-button>
-        <%--</shiro:hasPermission>--%>
+        <shiro:hasPermission name="car:add">
+        <i-button type="success" @click="toAdd">添加车辆</i-button>
+        </shiro:hasPermission>
     </card>
     <i-table :columns="myColumns" :data="pageResult.rows" border stripe :height="400">
         <template slot-scope="{row}" slot="isFree" >
@@ -46,13 +46,13 @@
         </template>
 
         <template slot-scope="{row,index}" slot="action">
-            <%--<shiro:hasPermission name="user:update">--%>
+            <shiro:hasPermission name="car:update">
                 <i-button type="warning" @click="toUpdate(row)" >修改</i-button>
-            <%--</shiro:hasPermission>--%>
+            </shiro:hasPermission>
 
-            <%--<shiro:hasPermission name="user:del">--%>
+            <shiro:hasPermission name="car:del">
                 <i-button type="error" @click="del(row)" >刪除</i-button>
-            <%--</shiro:hasPermission>--%>
+            </shiro:hasPermission>
         </template>
     </i-table>
 

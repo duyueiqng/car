@@ -40,6 +40,7 @@ public class CarRealm extends AuthorizingRealm {
 
         //得到其对应的权限
         List<String> stringList = permissionService.searchPermByRoleId(user.getUserRole());
+        System.out.println(stringList);
         //将权限放入SimpleAuthorizationInfo对象
         SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
         for (String s : stringList) {
@@ -59,7 +60,7 @@ public class CarRealm extends AuthorizingRealm {
         if (user == null){
             return null;
         }
-        System.out.println(user);
+//        System.out.println(user);
         AuthenticationInfo authenticationInfo = new SimpleAuthenticationInfo(user, //用户名
                 user.getPassword(), //密码
                 ByteSource.Util.bytes(user.getSalt()),//salt=username+salt

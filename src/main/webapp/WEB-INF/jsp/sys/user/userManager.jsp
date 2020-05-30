@@ -1,4 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" isELIgnored="true" %>
+<%@ taglib prefix="shiro" uri="http://shiro.apache.org/tags" %>
 <html>
 <head>
     <title>员工管理</title>
@@ -19,7 +20,7 @@
                         <i-input type="text" v-model="userVo.id_card" />
                     </form-item>
                     <form-item label="角色查询:">
-                        <i-select  v-model="userVo.userRole" style="width:200px">
+                        <i-select  v-model="userVo.user_role" style="width:200px">
                             <i-Option value=" ">【全部】</i-Option>
                             <i-Option v-for="item in roleList" :value="item.id" :key="item.id">{{ item.roleName }}</i-Option>
                         </i-select>
@@ -31,8 +32,9 @@
             </p>
         </Panel>
         <card>
-            <i-button type="success" @click="toAdd">添加用户</i-button>
-            <i-button type="primary" @click="toGraint">角色授权</i-button>
+            <shiro:hasPermission name="user:add">
+                <i-button type="success" @click="toAdd">添加用户</i-button>
+            </shiro:hasPermission>
         </card>
 
     </Collapse>
@@ -50,8 +52,12 @@
             <img :src="row.attachPath" alt="" width="50">
         </template>
         <template slot-scope="{row,index}" slot="action">
-            <i-button type="warning" @click="toUpdate(row)" >修改</i-button>
-            <i-button type="error" @click="del(row)" >刪除</i-button>
+            <shiro:hasPermission name="user:update">
+                <i-button type="warning" @click="toUpdate(row)" >修改</i-button>
+            </shiro:hasPermission>
+            <shiro:hasPermission name="user:del">
+                <i-button type="error" @click="del(row)" >刪除</i-button>
+            </shiro:hasPermission>
         </template>
     </i-table>
     <modal v-model="graideFlag" title="角色授权" @on-ok="graint">

@@ -27,12 +27,11 @@ public class IndexController {
 
     @RequestMapping("/index")
     public String index(Model model){
-        System.out.println("进入controller!!!");
         Subject subject = SecurityUtils.getSubject();
         User user = (User) subject.getPrincipal();
         Session session = subject.getSession();
         session.setAttribute(Constants.USER_SESSION,user);
-        List<Menu> permissionList = permissionService.searchMenuList();
+        List<Menu> permissionList = permissionService.searchMenuList(user.getUserRole());
         model.addAttribute("menuList",permissionList);
         return "sys/menu/index";
     }
