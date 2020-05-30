@@ -69,29 +69,32 @@ public class PermissionServiceImpl extends ServiceImpl<PermissionMapper,Menu> im
         List<Menu> menuList01 = this.getPermissions(null);
         //stream().filter过滤符合条件的list
         //.collect(Collectors.toList()) 将数据收集进一个列表(Stream 转换为 List，允许重复值，有顺序)
-
 //        menuList01.stream()
 //                .filter(p->subject.isPermitted(p.getPermCode()))
 //                .collect(Collectors.toList());
+        List<Menu> middleLit01 = new ArrayList<>();
         for (int i=0;i<menuList01.size();i++) {
             Menu menu = menuList01.get(i);
-            if (!subject.isPermitted(menu.getPermCode())){
-                menuList01.remove(i);
+            if (subject.isPermitted(menu.getPermCode())){
+                middleLit01.add(menuList01.get(i));
             }
         }
-        for (Menu menu : menuList01){
+        List<Menu> middleLit02 = new ArrayList<>();
+        for (Menu menu : middleLit01){
 //            System.out.println("父权限"+menu.getPermCode());
             List<Menu> menuList02 = this.getPermissions(menu.getId());
 //            menuList02.stream().filter(p->subject.isPermitted(p.getPermCode())).collect(Collectors.toList());
             for (int i=0;i<menuList02.size();i++) {
                 Menu menu2 = menuList02.get(i);
-                if (!subject.isPermitted(menu2.getPermCode())){
-                    menuList02.remove(i);
+                if (subject.isPermitted(menu2.getPermCode())){
+                    middleLit02.add(menuList02.get(i));
                 }
             }
-            menu.getChildren().addAll(menuList02);
+            menu.getChildren().addAll(middleLit02);
+            middleLit02=new ArrayList<>();
         }
-        return menuList01;
+        System.out.println(middleLit01.toString());
+        return middleLit01;
     }
     private List<Menu> getPermissions(Integer parentId) {
         QueryWrapper wrapper = Wrappers.<Menu>query();

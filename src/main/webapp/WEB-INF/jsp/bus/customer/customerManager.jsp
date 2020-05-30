@@ -30,11 +30,6 @@
                 </i-form>
             </p>
         </Panel>
-        <card>
-            <shiro:hasPermission name="user:add">
-                <i-button type="success" @click="toAdd">添加用户</i-button>
-            </shiro:hasPermission>
-        </card>
     </Collapse>
     <i-table :columns="myColumns" :data="pageResult.rows" border stripe @on-selection-change="tableSelection=arguments[0]">
         <template slot-scope="{row}" slot="sex">
