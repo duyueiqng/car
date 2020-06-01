@@ -30,7 +30,6 @@ public class CarController {
 
     @GetMapping("/list")
     public List<Car> list(){
-
         List<Car> list = carService.selectByList();
         return list;
     }
