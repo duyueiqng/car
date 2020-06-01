@@ -31,11 +31,11 @@
     </Collapse>
     <i-table :columns="myColumns" :data="pageResult.rows" border stripe :height="400">
         <template slot-scope="{row}" slot="rentflag" >
-            <span>{{row.rentflag==1?"已完成":"使用中"}}</span>
+            <span>{{row.rentflag==1?"使用中":"已完成"}}</span>
         </template>
 
         <template slot-scope="{row,index}" slot="action">
-            <span v-if="row.rentflag==1">
+            <span v-if="row.rentflag!=1">
                 <i-button type="warning" @click="toUpdate(row)" >打印出租单</i-button>
             </span>
             <span v-else>
@@ -101,7 +101,7 @@
             //表格数据
             myColumns:[
                 {key:"id",title:"订单编号"},
-                {key:"numCard",title:"身份信息"},
+                {key:"custId",title:"身份信息"},
                 {key:"carId",title:"车辆"},
                 {slot:"rentflag",title:"状态"},
                 {key:"imprest",title:"预付款"},

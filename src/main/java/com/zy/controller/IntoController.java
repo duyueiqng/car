@@ -43,7 +43,7 @@ public class IntoController {
         Renttable renttable1 = intoService.findHave(id);
         if (renttable1==null){
             msg="暂无此订单,请核对后重试!";
-        }else if(renttable1.getRentflag()==1.0){
+        }else if(renttable1.getRentflag()!=1.0){
             msg="此订单交易已完成,谢谢您的使用!";
         }else{
             List<Renttable> list = new ArrayList<>();
@@ -87,9 +87,9 @@ public class IntoController {
         System.out.println("归还接收:"+returnVo);
         Renttable renttable = new Renttable();
         renttable.setId(returnVo.getRentId());
-        renttable.setRentflag(1.0);
+        renttable.setRentflag(0.0);
         Car car = new Car();
-        car.setIsFree(1);
+        car.setIsFree(0);
         car.setId(returnVo.getCarid());
         try {
             rentService.updateRent(renttable);
