@@ -47,6 +47,10 @@ public class ShiroConfig {
         Map<String,String> filterChainDefinitionMap = new LinkedHashMap<String,String>();
         //配置不会拦截的页面,顺序判断
         filterChainDefinitionMap.put("/login", "anon");
+        filterChainDefinitionMap.put("/login/getCode", "anon");
+        filterChainDefinitionMap.put("/toRegister", "anon");
+        filterChainDefinitionMap.put("/sys/user/registAdd", "anon");
+        filterChainDefinitionMap.put("/sys/user/upload", "anon");
 
         // 退出代码Shiro已经替我们实现了
         filterChainDefinitionMap.put("/logout", "logout");

@@ -13,6 +13,7 @@ import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -45,12 +46,19 @@ public class UserController extends BaseController{
 
 
     //添加新用户
-    @PostMapping("/doAdd")
+    @PostMapping("/registAdd")
     public ResultVo doAdd(@RequestBody User user){
         System.out.println("请求添加的客户:"+user.getBirthday());
         String msg = "添加新客户失败!";
         try {
             msg="添加新客户成功!";
+            if (user.getCreatedate()==null){
+                user.setCreatedate(LocalDateTime.now());
+            }
+            if(user.getUserRole()==null){
+                user.setUserRole(5);
+            }
+            user.setSalt("qwert");
             userService.doAdd(user);
             return ResultVo.success(msg);
         }catch (Exception e){
@@ -58,6 +66,7 @@ public class UserController extends BaseController{
         }
 
     }
+
 
     //修改用户
     @PostMapping("/doUpdate")
