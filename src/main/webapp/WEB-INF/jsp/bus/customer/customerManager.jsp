@@ -18,23 +18,18 @@
                     <form-item label="身份信息:" >
                         <i-input type="text" v-model="userVo.id_card" />
                     </form-item>
-                    <form-item label="角色查询:">
-                        <i-select  v-model="userVo.userRole" style="width:200px">
-                            <i-Option value=" ">【全部】</i-Option>
-                            <i-Option v-for="item in roleList" :value="item.id" :key="item.id">{{ item.roleName }}</i-Option>
-                        </i-select>
-                    </form-item>
+                    <%--<form-item label="角色查询:">--%>
+                        <%--<i-select  v-model="userVo.user_role" style="width:200px">--%>
+                            <%--<i-Option value=" ">【全部】</i-Option>--%>
+                            <%--<i-Option v-for="item in roleList" :value="item.id" :key="item.id">{{ item.roleName }}</i-Option>--%>
+                        <%--</i-select>--%>
+                    <%--</form-item>--%>
                     <form-item>
                         <i-button @click="searchUserList">搜索</i-button>
                     </form-item>
                 </i-form>
             </p>
         </Panel>
-        <card>
-            <i-button type="success" @click="toAdd">添加用户</i-button>
-            <i-button type="primary" @click="toGraint">角色授权</i-button>
-        </card>
-
     </Collapse>
     <i-table :columns="myColumns" :data="pageResult.rows" border stripe @on-selection-change="tableSelection=arguments[0]">
         <template slot-scope="{row}" slot="sex">
@@ -50,24 +45,19 @@
             <img :src="row.attachPath" alt="" width="50">
         </template>
         <template slot-scope="{row,index}" slot="action">
-            <i-button type="warning" @click="toUpdate(row)" >修改</i-button>
-            <i-button type="error" @click="del(row)" >刪除</i-button>
+            <shiro:hasPermission name="user:update">
+                <i-button type="warning" @click="toUpdate(row)" >修改</i-button>
+            </shiro:hasPermission>
+            <shiro:hasPermission name="user:del">
+                <i-button type="error" @click="del(row)" >刪除</i-button>
+            </shiro:hasPermission>
         </template>
+
     </i-table>
-    <modal v-model="graideFlag" title="角色授权" @on-ok="graint">
-        <card>
-            授权对象:&nbsp;&nbsp;&nbsp;
-        </card>
-        <i-table :columns="myColumns2" :data="roleList" border stripe @on-selection-change="tableSelection2=arguments[0]">
-
-        </i-table>
-
-    </modal>
-
 
     <%--弹框消息:增加弹框代码--%>
     <Modal v-model="addFlag" title="增加客户信息" @on-ok="doAdd">
-        <i-form :model="forItem" inline :label-width="60">
+        <i-form  inline :label-width="60">
             <form-item label="编号">
                 <i-input v-model="user.usercode"/>
             </form-item>
@@ -118,7 +108,7 @@
 
     <%--弹框消息:修改弹框代码--%>
     <Modal v-model="updateFlag" title="修改客户信息" @on-ok="doUpdate">
-        <i-form :model="forItem" inline :label-width="60">
+        <i-form  inline :label-width="60">
             <form-item label="编号">
                 <i-input v-model="user.usercode"/>
             </form-item>
@@ -196,7 +186,11 @@
                 rows:[],
                 tatal:0
             },
-            userVo:{},
+            userVo:{
+                username:'',
+                user_role:5,
+                id_card:''
+            },
             roleList:[],
             pageNo:1,
             pageSize:5,
@@ -215,13 +209,13 @@
         mounted(){
             this.searchUserList();
             this.searchRoleList();
+
         },
         methods:{
             searchUserList(){
                 axios.get(`${ctx}/sys/user/page/${this.pageNo}/${this.pageSize}`,{params:this.userVo})
                     .then(({data})=>{
                         this.pageResult=data.result;
-                        // console.log(this.pageResult)
                     })
             },
             searchRoleList(){
@@ -240,7 +234,7 @@
                 this.user = {};
                 this.addFlag=true;
             },
-            //添加车辆
+            //添加客户
             doAdd(){
                 console.log(this.user);
                 axios.post(`${ctx}/sys/user/doAdd`,this.user)
@@ -303,7 +297,6 @@
                 this.user.attachPath=response.result.attachPath;  //给需要修改的数据库指定的数据赋值
                 iview.Message.success("上传成功！");
             },
-
         },
 
     });

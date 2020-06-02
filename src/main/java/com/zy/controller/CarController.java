@@ -1,6 +1,8 @@
 package com.zy.controller;
 
 import com.zy.pojo.Car;
+import com.zy.pojo.CarConfig;
+import com.zy.service.CarConfigService;
 import com.zy.service.CarService;
 import com.zy.vo.CarVo;
 import com.zy.vo.PageResult;
@@ -27,6 +29,8 @@ import java.util.UUID;
 public class CarController {
     @Resource
     private CarService carService;
+    @Resource
+    private CarConfigService carConfigService;
 
     @GetMapping("/list")
     public List<Car> list(){
@@ -91,6 +95,24 @@ public class CarController {
             return msg;
         }
     }
+
+    //查看功能
+    @RequestMapping("/look")
+    public ResultVo look(String vin){
+        System.out.println(vin);
+        try {
+            CarConfig carConfig = carConfigService.getById(vin);
+            System.out.println("查看的车辆:"+carConfig.toString());
+            return ResultVo.success(carConfig);
+        }catch (Exception e){
+            System.out.println("查看出现错误:"+e);
+            return ResultVo.success(e);
+        }
+    }
+
+
+
+
 
 
     //文件上传功能

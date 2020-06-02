@@ -55,6 +55,8 @@ public class CheckTableServiceImpl implements CheckTableService {
 
     @Override
     public void deleteCheckedById(Integer checkedId) {
-        checkTableMapper.deleteById(checkedId);
+        LambdaQueryWrapper<Checktable> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(checkedId!=null,Checktable::getCheckId,checkedId);
+        checkTableMapper.delete(queryWrapper);
     }
 }
