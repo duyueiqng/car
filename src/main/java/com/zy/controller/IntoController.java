@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -89,7 +88,6 @@ public class IntoController {
         Renttable renttable = new Renttable();
         renttable.setId(returnVo.getRentId());
         renttable.setRentflag(0.0);
-        renttable.setReturnDate(new Date());
         Car car = new Car();
         car.setIsFree(0);
         car.setId(returnVo.getCarid());

@@ -42,7 +42,6 @@ public class RentController {
         System.out.println(renttable.toString());
         Car car = carService.findBynum(renttable.getCarId());
         car.setIsFree(1);
-        System.out.println(car.toString());
         try {
             carService.doUpdate(car);
             renttable.setId(UUID.randomUUID().toString());
