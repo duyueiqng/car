@@ -62,4 +62,24 @@ public interface UserService extends IService<User> {
      * @return
      */
     public User getUserByCard(String idCard);
+
+    /**
+     * 注册
+     * @param user
+     * @return
+     */
+    boolean register(User user);
+
+    /**
+     * 用户激活
+     * @param activeCode
+     */
+    void active(String activeCode);
+
+    /**
+     * 检验用户是否已经存在
+     * @param usercode
+     * @return
+     */
+    boolean getUserByUserCode(String usercode);
 }

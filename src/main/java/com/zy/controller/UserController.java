@@ -2,6 +2,7 @@ package com.zy.controller;
 
 import com.zy.pojo.User;
 import com.zy.service.UserService;
+import com.zy.utils.MailUtils;
 import com.zy.vo.PageResult;
 import com.zy.vo.ResultVo;
 import com.zy.vo.UserVo;
@@ -9,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
+import javax.mail.MessagingException;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import java.io.File;
@@ -46,7 +48,7 @@ public class UserController extends BaseController{
 
 
     //添加新用户
-    @PostMapping("/registAdd")
+    @PostMapping("/doAdd")
     public ResultVo doAdd(@RequestBody User user){
         System.out.println("请求添加的客户:"+user.getBirthday());
         String msg = "添加新客户失败!";

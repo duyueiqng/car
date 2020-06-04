@@ -91,7 +91,7 @@ public class LoinController {
 
     @RequestMapping("/toRegister")
     public String toResister(){
-        return "/sys/login/register";
+        return "sys/register/register";
     }
 
 
