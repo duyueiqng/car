@@ -76,4 +76,32 @@ public class UserServiceImpl extends ServiceImpl<UserMapper,User> implements Use
         wrapper.eq(User::getIdCard,idCard);
         return super.getOne(wrapper);
     }
+
+    @Override
+    public boolean register(User user) {
+        int row = baseMapper.insert(user);
+        if (row>0){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    @Override
+    public void active(String activeCode) {
+
+        baseMapper.updateUser(activeCode);
+    }
+
+    @Override
+    public boolean getUserByUserCode(String usercode) {
+        LambdaQueryWrapper<User> wrapper = Wrappers.<User>lambdaQuery();
+        wrapper.eq(User::getUsercode,usercode);
+        User user = baseMapper.selectOne(wrapper);
+        if (user!=null){
+            return false;//不能注册
+        }else{
+            return true;//可以注册
+        }
+    }
 }

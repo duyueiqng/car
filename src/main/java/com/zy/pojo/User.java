@@ -93,7 +93,20 @@ public class User {
 	@TableField(exist = false)
 	private Role role;
 
+	/**
+	 * 激活码
+	 */
+	private String code;
 
+	/**
+	 * 邮箱
+	 */
+	private String email;
+
+	/**
+	 * 状态
+	 */
+	private String state;
 
 
 }

@@ -2,6 +2,7 @@ package com.zy.controller;
 
 import com.zy.pojo.User;
 import com.zy.service.UserService;
+import com.zy.utils.MailUtils;
 import com.zy.vo.PageResult;
 import com.zy.vo.ResultVo;
 import com.zy.vo.UserVo;
@@ -9,10 +10,12 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
+import javax.mail.MessagingException;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -51,6 +54,13 @@ public class UserController extends BaseController{
         String msg = "添加新客户失败!";
         try {
             msg="添加新客户成功!";
+            if (user.getCreatedate()==null){
+                user.setCreatedate(LocalDateTime.now());
+            }
+            if(user.getUserRole()==null){
+                user.setUserRole(5);
+            }
+            user.setSalt("qwert");
             userService.doAdd(user);
             return ResultVo.success(msg);
         }catch (Exception e){
@@ -58,6 +68,7 @@ public class UserController extends BaseController{
         }
 
     }
+
 
     //修改用户
     @PostMapping("/doUpdate")

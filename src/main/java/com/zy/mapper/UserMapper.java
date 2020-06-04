@@ -7,6 +7,7 @@ import com.zy.pojo.User;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.ResultMap;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 
 import java.util.List;
 
@@ -18,4 +19,8 @@ public interface UserMapper extends BaseMapper<User> {
 
     //查询全部或条件查询(ew代表携带条件)page为分页
     List<User> findAll(Page page, @Param("ew") Wrapper wrapper);
+
+    //修改用户状态
+    @Update("update user set state = 1 where code = #{activeCode}")
+    void updateUser(String activeCode);
 }
