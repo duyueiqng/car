@@ -46,6 +46,10 @@
         </template>
 
         <template slot-scope="{row,index}" slot="action">
+
+
+
+            <i-button type="warning" @click="look(row)" size="small" title="查看"><Icon type="md-eye" /></i-button>
             <shiro:hasPermission name="car:update">
                 <i-button type="warning" @click="toUpdate(row)" >修改</i-button>
             </shiro:hasPermission>

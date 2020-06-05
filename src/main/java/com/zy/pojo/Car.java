@@ -63,5 +63,10 @@ public class Car {
 	@JsonFormat(pattern = "yyyy-MM-dd HH:mm")
 	private java.time.LocalDateTime createtime;
 
+	/**
+	 * 车辆唯一标识
+	 */
+	private String vin;
+
 
 }

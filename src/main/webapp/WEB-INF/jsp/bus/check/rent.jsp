@@ -36,7 +36,7 @@
 
         <template slot-scope="{row,index}" slot="action">
             <span v-if="row.rentflag!=1">
-                <i-button type="warning" @click="toUpdate(row)" >打印出租单</i-button>
+                <i-button type="warning" @click="exportExcel(row)" >打印出租单</i-button>
             </span>
             <span v-else>
                 <i-button type="error" @click="toUpdate(row)" >编辑</i-button>
@@ -216,16 +216,12 @@
                 this.car.carImg=response.result.carImg;  //给需要修改的数据库指定的数据赋值
                 iview.Message.success("上传成功！");
             },
-            <%--//提交工作照数据保存数据库--%>
-            <%--updateAttach(){--%>
-                <%--console.log(this.uploadForm);--%>
-                <%--axios.post(`${ctx}/sys/user/updateAttach`,this.uploadForm)--%>
-                    <%--.then(({data})=>{--%>
-                        <%--this.uploadFlag=false;--%>
-                        <%--iview.Message.success(data.msg);--%>
-                        <%--this.searchUserPage();--%>
-                    <%--});--%>
-            <%--}--%>
+
+
+            exportExcel(row){
+                location.href=`${ctx}/sys/rent/exportPdf1?id=${row.id}`;
+            }
+
 
 
 

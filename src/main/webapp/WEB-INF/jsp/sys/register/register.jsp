@@ -60,7 +60,6 @@
               </form-item>
             <form-item>
                 <i-button  type="primary"  style="width:40%;" @click="doAdd('formValidate')">注册</i-button>
-                <%--<i-button  type="primary"  style="width:40%;" @click="active">去激活</i-button>--%>
             </form-item>
 
         </i-form>
