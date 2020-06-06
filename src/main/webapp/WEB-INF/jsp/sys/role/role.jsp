@@ -11,19 +11,19 @@
 
     <card>
         <shiro:hasPermission name="role:add">
-            <i-button type="success" @click="addRole">添加角色</i-button>
+            <i-button type="success" @click="addRole" title="添加"><Icon type="md-add-circle" /></i-button>
         </shiro:hasPermission>
         <shiro:hasPermission name="role:grant">
-            <i-button type="primary" @click="toGrait">角色授权</i-button>
+            <i-button type="primary" @click="toGrait" title="角色授权"><Icon type="ios-ionitron" /></i-button>
         </shiro:hasPermission>
     </card>
     <i-table  border stripe :columns="myColumns" :data="myData" @on-selection-change="tableSelection=arguments[0]">
         <template slot-scope="{row,index}" slot="action">
             <shiro:hasPermission name="role:update">
-                <i-button type="warning" @click="toUpdate(row)" >修改</i-button>
+                <i-button type="warning" @click="toUpdate(row)" size="small" title="修改" ><Icon type="ios-create-outline" /></i-button>
             </shiro:hasPermission>
             <shiro:hasPermission name="role:del">
-                <i-button type="error" @click="del(row)" >刪除</i-button>
+                <i-button type="error" @click="del(row)" size="small"  title="删除" ><Icon type="md-trash" /></i-button>
             </shiro:hasPermission>
         </template>
     </i-table>

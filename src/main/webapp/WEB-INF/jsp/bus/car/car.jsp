@@ -34,7 +34,7 @@
     </Collapse>
     <card>
         <shiro:hasPermission name="car:add">
-        <i-button type="success" @click="toAdd"><Icon type="md-add-circle" /></i-button>
+        <i-button type="success" @click="toAdd" title="添加"><Icon type="md-add-circle" /></i-button>
         </shiro:hasPermission>
     </card>
     <i-table :columns="myColumns" :data="pageResult.rows" border stripe :height="400">

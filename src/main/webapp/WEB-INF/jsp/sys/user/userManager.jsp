@@ -33,7 +33,7 @@
         </Panel>
         <card>
             <shiro:hasPermission name="user:add">
-                <i-button type="success" @click="toAdd">添加用户</i-button>
+                <i-button type="success" @click="toAdd" title="添加用户"><Icon type="md-add-circle" /></i-button>
             </shiro:hasPermission>
         </card>
 

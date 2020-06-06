@@ -36,11 +36,11 @@
 
         <template slot-scope="{row,index}" slot="action">
             <span v-if="row.rentflag!=1">
-                <i-button type="warning" @click="exportExcel(row)" >打印出租单</i-button>
+                <i-button type="warning" @click="exportExcel(row)" title="打印出租单" ><Icon type="md-print" /></i-button>
             </span>
             <span v-else>
-                <i-button type="error" @click="toUpdate(row)" >编辑</i-button>
-                <i-button type="error" @click="del(row)" >刪除</i-button>
+                <i-button type="error" @click="toUpdate(row)"  title="编辑" ><Icon type="ios-create-outline" /></i-button>
+                <i-button type="error" @click="del(row)"  title="删除" ><Icon type="md-trash" /></i-button>
             </span>
         </template>
     </i-table>

@@ -60,7 +60,6 @@
               </form-item>
             <form-item>
                 <i-button  type="primary"  style="width:40%;" @click="doAdd('formValidate')">注册</i-button>
-                <%--<i-button  type="primary"  style="width:40%;" @click="active">去激活</i-button>--%>
             </form-item>
 
         </i-form>
@@ -74,20 +73,20 @@
             }else if(value.length < 5 || value.length >8 ){
                 return callback(new Error('用户代号大于等于5小于8'));
             }else{
-                console.log(vm.formValidate.usercode)
+                console.log(vm.formValidate.usercode);
                 var usercode=vm.formValidate.usercode;
                 axios.get(`${ctx}/car/sys/register/volidateUserCode`,{params:{usercode:usercode}}).then((res) => {
                     if (res.data) {
-                        console.log("可以注册，返回true")
+                        console.log("可以注册，返回true");
                         return callback();
                     } else {
-                        console.log("不可以注册，返回false")
+                        console.log("不可以注册，返回false");
                         return callback(new Error('该用户代号已被注册'));
 
                     }
                 })
             }
-    }
+    };
     var vm = new Vue({
         el:'#root',
         created(){
@@ -173,7 +172,7 @@
                 this.$refs[name].validate((valid) => {
                     if (valid) {
                         // this.$Message.success('验证成功!');
-                        Object.assign(this.user,this.formValidate)
+                        Object.assign(this.user,this.formValidate);
                         this.user.birthday=moment(this.user.birthday).format("YYYY-MM-DD");
                         axios.post(`${ctx}/car/sys/register/registAdd`,this.user)
                             .then(({data})=>{

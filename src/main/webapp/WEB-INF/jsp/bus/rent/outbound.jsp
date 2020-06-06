@@ -61,7 +61,7 @@
     <Modal v-model="carFlag" title="车辆信息表" @on-Ok="confirmCar" :height="400" :width="1000">
         <i-table :columns="myColumns" :data="carList" border stripe :height="400" :width="950" @on-selection-change="tableSelection=arguments[0]">
             <template slot-scope="{row}" slot="isFree" >
-                <span>{{row.isFree==1?"空闲":"出租"}}</span>
+                <span>{{row.isFree==1?"出租":"空闲"}}</span>
             </template>
             <template slot-scope="{row}" slot="carImg" >
                 <img :src="row.carImg" alt="" width="50">
