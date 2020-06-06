@@ -37,6 +37,11 @@ public class CarController {
         List<Car> list = carService.selectByList();
         return list;
     }
+    @GetMapping("/freelist")
+    public List<Car> list(String isFree){
+        List<Car> list = carService.selectByListByFree(isFree);
+        return list;
+    }
 
     //采用result风格(查询全部,条件查询和分页查询)
     @GetMapping("/page/{pageNo}/{pageSize}")

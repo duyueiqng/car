@@ -23,4 +23,8 @@ public interface UserMapper extends BaseMapper<User> {
     //修改用户状态
     @Update("update user set state = 1 where code = #{activeCode}")
     void updateUser(String activeCode);
+
+    //修改密码
+    @Update("update user set password = #{pwdNew} where id = #{userid}")
+    void updateUserPwd(@Param("pwdNew") String pwdNew,@Param("userid") Integer userid);
 }

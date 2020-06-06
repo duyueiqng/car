@@ -47,4 +47,11 @@ public interface CarService {
      * 归还的信息查询
      */
     Car findBynum(String carNumber);
+
+    /**
+     * 查找未出租的汽车
+     * @param isFree
+     * @return
+     */
+    List<Car> selectByListByFree(String isFree);
 }

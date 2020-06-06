@@ -33,7 +33,7 @@ public class User {
 	private String password;
 
 	/**
-	 * 性别
+	 * 性别 1 男 0女
 	 */
 	private Integer sex;
 

@@ -1,6 +1,8 @@
 package com.zy.controller;
 
+import com.zy.pojo.Renttable;
 import com.zy.pojo.User;
+import com.zy.service.RentService;
 import com.zy.service.UserService;
 import com.zy.utils.MailUtils;
 import com.zy.vo.PageResult;
@@ -31,10 +33,28 @@ public class UserController extends BaseController{
     @Resource
     private UserService userService;
 
+    @Resource
+    private RentService rentService;
+
     @GetMapping("/getUserByCard")
     public ResultVo getUserByCard(String idCard){
+        String msg ="";
+
         User user = userService.getUserByCard(idCard);
-        return ResultVo.success(user);
+        if (user!=null){
+            boolean flag = rentService.getRentTableByCard(idCard);
+            if (flag){
+                //存在未完成的订单
+                msg="您还有未完成的订单";
+            }else{
+                msg="查询成功";
+                return ResultVo.success(user);
+            }
+        }else{
+            msg="用户不存在";
+
+        }
+        return ResultVo.faile(msg);
     }
 
     @GetMapping("/page/{pageNo}/{pageSize}")
@@ -85,6 +105,23 @@ public class UserController extends BaseController{
 
     }
 
+    /**
+     * 更改用户密码
+     * @return
+     */
+    @GetMapping("/updatePwd")
+    public ResultVo doUpdate(@RequestParam String pwdNew,@RequestParam Integer userid){
+        System.out.println("用户Id:"+userid+"新密码"+pwdNew);
+        String msg = "修改密码出现未知异常失败!";
+        try {
+            userService.updatePwd(pwdNew,userid);
+            msg="修改密码成功!";
+            return ResultVo.success(msg);
+        }catch (Exception e){
+            return ResultVo.faile(msg,e);
+        }
+
+    }
 
     //删除用户
     @RequestMapping("/del")

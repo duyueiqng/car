@@ -60,7 +60,30 @@
         </template>
     </i-table>
 
-
+        <%--弹框消息:增加弹框代码--%>
+        <Modal v-model="lookFlag" title="查看车辆信息" :styles="{top: '40px'}">
+            <h2 style="width: 100px">车辆信息</h2>
+            <div style="margin-left: 10px;display: inline-block;width: 200px;">
+                <h3>车牌号:{{car.carNumber}}</h3>
+                <h3>车型:{{car.carType}}</h3>
+                <h3>车辆颜色:{{car.carColor}}</h3>
+                <h3>车辆价格:{{car.carNumber}}</h3>
+                <h3>介绍:{{car.carDemp}}</h3>
+                <h3>租赁价格:{{car.rentprice}}</h3>
+                <h3>租赁押金:{{car.deposit}}</h3>
+            </div>
+            <div style="float: right;display: inline-block;width: 250px;">
+                <img :src="car.carImg" title="车辆图片" width="150" >
+            </div>
+            <h2 style="width: 100px">车辆配置</h2>
+            <div style="margin-left: 10px;display: inline-block">
+                <h3>发动机配件:{{carconfig.engine}}</h3>
+                <h3>传动系配件:{{carconfig.transmission}}</h3>
+                <h3>转向系配件:{{carconfig.steering}}</h3>
+                <h3>汽车内饰:{{carconfig.carInterior}}</h3>
+                <h3>汽车外饰:{{carconfig.carTrim}}</h3>
+            </div>
+        </Modal>
     <%--弹框消息:增加弹框代码--%>
     <Modal v-model="addFlag" title="添加车辆信息" @on-ok="doAdd">
         <i-form inline :label-width="60">
@@ -178,13 +201,16 @@
             },
             //添加弹框
             addFlag:false,
+            //详细信息查看弹框
+            lookFlag:false,
             //修改弹框
             updateFlag:false,
             //添加存放
             car:{},
             //图片预览功能的实现
             img:null,
-
+            //车辆详细信息
+            carconfig:{},
 
         },
         mounted(){
@@ -267,18 +293,17 @@
                 this.car.carImg=response.result.carImg;  //给需要修改的数据库指定的数据赋值
                 iview.Message.success("上传成功！");
             },
-            <%--//提交工作照数据保存数据库--%>
-            <%--updateAttach(){--%>
-                <%--console.log(this.uploadForm);--%>
-                <%--axios.post(`${ctx}/sys/user/updateAttach`,this.uploadForm)--%>
-                    <%--.then(({data})=>{--%>
-                        <%--this.uploadFlag=false;--%>
-                        <%--iview.Message.success(data.msg);--%>
-                        <%--this.searchUserPage();--%>
-                    <%--});--%>
-            <%--}--%>
-
-
+            //查看详细信息弹框
+            look(row){
+                this.car=row;
+                console.log(row.vin);
+                axios.get(`${ctx}/sys/car/look?vin=${row.vin}`)
+                    .then(({data})=>{
+                        this.carconfig=data.result;
+                        console.log(this.carconfig);
+                    });
+                this.lookFlag=true;
+            }
 
 
         }

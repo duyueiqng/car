@@ -104,4 +104,9 @@ public class UserServiceImpl extends ServiceImpl<UserMapper,User> implements Use
             return true;//可以注册
         }
     }
+
+    @Override
+    public void updatePwd(String pwdNew, Integer userid) {
+        baseMapper.updateUserPwd(pwdNew,userid);
+    }
 }

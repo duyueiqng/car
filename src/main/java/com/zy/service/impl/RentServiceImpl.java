@@ -51,4 +51,18 @@ public class RentServiceImpl implements RentService {
     public void deleteRent(Integer id) {
 
     }
+
+    @Override
+    public boolean getRentTableByCard(String idCard) {
+        LambdaQueryWrapper<Renttable> query=new LambdaQueryWrapper<>();
+        //进行判断条件查询的条件是否为空
+        query.eq(!StringUtils.isEmpty(idCard),Renttable::getCustId,idCard)
+            .eq(Renttable::getRentflag,1);
+        Integer integer = rentMapper.selectCount(query);
+        if (integer>0){
+            return true;
+        } else{
+            return false;
+        }
+    }
 }

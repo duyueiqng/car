@@ -106,13 +106,12 @@
                 //get提交方法携带参数的方法{params:this.userVo}
                 axios.get(`${ctx}/sys/user/getUserByCard?idCard=${this.idCard}`)
                     .then(({data})=>{
-                        if (data.result!=null){
-                            iview.Message.success({content:"查询成功！"});
+                        iview.Message.success({content:data.result});
+                        if (data.code!=5000){
                             this.$refs.rentCard.style.display="block";
                             this.searchCarList();
-                        }else {
-                            iview.Message.error({content:"请输入正确的身份证号!"});
                         }
+
                     })
             },
             doAdd(){
@@ -122,15 +121,15 @@
                 axios.post(`${ctx}/sys/rent/doAdd`,Qs.parse(params))
                     .then(({data})=>{
                         if (data.code=2000){
-                            iview.Message.success({content:data.content});
+                            iview.Message.success({content:data.msg});
                             this.renttable=null;
                         }else {
-                            iview.Message.error({content:data.content});
+                            iview.Message.error({content:data.msg});
                         }
                     })
             },
             searchCarList(){
-                axios.get(`${ctx}/sys/car/list`)
+                axios.get(`${ctx}/sys/car/freelist`,{params:{isFree:1}})
                     .then(({data})=>{
                         this.carList=data;
                     })

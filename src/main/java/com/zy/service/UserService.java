@@ -82,4 +82,10 @@ public interface UserService extends IService<User> {
      * @return
      */
     boolean getUserByUserCode(String usercode);
+
+    /**
+     * 修改密码
+     * @param pwdOld
+     */
+    void updatePwd( String pwdOld,Integer userid);
 }
