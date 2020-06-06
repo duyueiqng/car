@@ -60,7 +60,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper,User> implements Use
 
     @Override
     public User findByUsername(String username) {
-        LambdaQueryWrapper<User> wrapper = Wrappers.<User>lambdaQuery();
+        LambdaQueryWrapper<User> wrapper = Wrappers.lambdaQuery();
         wrapper.eq(User::getUsercode,username);
         return super.getOne(wrapper);
     }
@@ -72,7 +72,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper,User> implements Use
     }
     @Override
     public User getUserByCard(String idCard) {
-        LambdaQueryWrapper<User> wrapper = Wrappers.<User>lambdaQuery();
+        LambdaQueryWrapper<User> wrapper = Wrappers.lambdaQuery();
         wrapper.eq(User::getIdCard,idCard);
         return super.getOne(wrapper);
     }
@@ -80,11 +80,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper,User> implements Use
     @Override
     public boolean register(User user) {
         int row = baseMapper.insert(user);
-        if (row>0){
-            return true;
-        }else{
-            return false;
-        }
+        return row > 0;
     }
 
     @Override
@@ -95,13 +91,14 @@ public class UserServiceImpl extends ServiceImpl<UserMapper,User> implements Use
 
     @Override
     public boolean getUserByUserCode(String usercode) {
-        LambdaQueryWrapper<User> wrapper = Wrappers.<User>lambdaQuery();
+        LambdaQueryWrapper<User> wrapper = Wrappers.lambdaQuery();
         wrapper.eq(User::getUsercode,usercode);
         User user = baseMapper.selectOne(wrapper);
-        if (user!=null){
-            return false;//不能注册
-        }else{
-            return true;//可以注册
-        }
+        return user == null;
+    }
+
+    @Override
+    public void updatePwd(String pwdNew, Integer userid) {
+        baseMapper.updateUserPwd(pwdNew,userid);
     }
 }

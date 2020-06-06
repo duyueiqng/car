@@ -31,7 +31,10 @@ public interface RentService {
      */
     void deleteRent(Integer id);
 
-
-
-
+    /**
+     * 查找用户是否有未完成的订单
+     * @param idCard
+     * @return
+     */
+    boolean getRentTableByCard(String idCard);
 }

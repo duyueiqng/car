@@ -36,7 +36,6 @@
                 <i-button type="success" @click="toAdd" title="添加用户"><Icon type="md-add-circle" /></i-button>
             </shiro:hasPermission>
         </card>
-
     </Collapse>
     <i-table :columns="myColumns" :data="pageResult.rows" border stripe @on-selection-change="tableSelection=arguments[0]">
         <template slot-scope="{row}" slot="sex">

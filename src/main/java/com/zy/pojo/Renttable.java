@@ -50,9 +50,9 @@ public class Renttable {
 	private java.util.Date returnDate;
 
 	/**
-	 * 是否归还 是否归还，0.0，归还，1.0未归还
+	 * 是否归还，0，归还，1未归还
 	 */
-	private Double rentflag;
+	private Integer rentflag;
 
 	/**
 	 * 身份证

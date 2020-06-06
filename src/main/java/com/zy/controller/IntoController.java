@@ -87,7 +87,7 @@ public class IntoController {
         System.out.println("归还接收:"+returnVo);
         Renttable renttable = new Renttable();
         renttable.setId(returnVo.getRentId());
-        renttable.setRentflag(0.0);
+        renttable.setRentflag(0);
         renttable.setReturnDate(new Date());
         Car car = new Car();
         car.setIsFree(0);

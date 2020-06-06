@@ -97,13 +97,13 @@
                         <Submenu name="3">
                             <template slot="title" style="font-family: Ionicons;speak: none;font-style: normal;font-size:18px;font-weight: 400;">
                                 <Avatar src="https://dev-file.iviewui.com/userinfoPDvn9gKWYihR24SpgC319vXY8qniCqj4/avatar"></Avatar>
-                                管理员
+                                ${user.usercode}
                             </template>
                             <Menu-Item name="3-1">
-                                <a href="sys/car/index" target="main">个人资料</a>
+                                <a href="sys/menu/persion/index" target="main">个人资料</a>
                             </Menu-Item>
                             <Menu-Item name="3-2">
-                                <a href="sys/user/index" target="main">修改密码</a>
+                                <a href="sys/menu/updatePwd/index" target="main">修改密码</a>
                             </Menu-Item>
                             <Menu-Item name="3-2">
                                 <a @click.href="logout()">退出系统</a>

@@ -34,12 +34,12 @@
     </Collapse>
     <card>
         <shiro:hasPermission name="car:add">
-        <i-button type="success" @click="toAdd" title="添加"><Icon type="md-add-circle" /></i-button>
+        <i-button type="success" @click="toAdd">添加车辆</i-button>
         </shiro:hasPermission>
     </card>
     <i-table :columns="myColumns" :data="pageResult.rows" border stripe :height="400">
         <template slot-scope="{row}" slot="isFree" >
-            <span>{{row.isFree==1?"出租":"空闲"}}</span>
+            <span>{{row.isFree==1?"空闲":"出租"}}</span>
         </template>
         <template slot-scope="{row}" slot="carImg" >
             <img :src="row.carImg" alt="" width="50">
@@ -50,9 +50,8 @@
 
 
             <i-button type="warning" @click="look(row)" size="small" title="查看"><Icon type="md-eye" /></i-button>
-
             <shiro:hasPermission name="car:update">
-                <i-button type="warning" @click="toUpdate(row)"  size="small" title="修改" ><Icon type="ios-create-outline" /></i-button>
+                <i-button type="warning" @click="toUpdate(row)" size="small"  title="修改" ><Icon type="ios-create-outline" /></i-button>
             </shiro:hasPermission>
 
             <shiro:hasPermission name="car:del">
@@ -61,31 +60,30 @@
         </template>
     </i-table>
 
-
-    <%--弹框消息:增加弹框代码--%>
-    <Modal v-model="lookFlag" title="查看车辆信息" :styles="{top: '40px'}">
-        <h2 style="width: 100px">车辆信息</h2>
-        <div style="margin-left: 10px;display: inline-block;width: 200px;">
-            <h3>车牌号:{{car.carNumber}}</h3>
-            <h3>车型:{{car.carType}}</h3>
-            <h3>车辆颜色:{{car.carColor}}</h3>
-            <h3>车辆价格:{{car.carNumber}}</h3>
-            <h3>介绍:{{car.carDemp}}</h3>
-            <h3>租赁价格:{{car.rentprice}}</h3>
-            <h3>租赁押金:{{car.deposit}}</h3>
-        </div>
-        <div style="float: right;display: inline-block;width: 250px;">
-            <img :src="car.carImg" title="车辆图片" width="150" >
-        </div>
-        <h2 style="width: 100px">车辆配置</h2>
-        <div style="margin-left: 10px;display: inline-block">
-            <h3>发动机配件:{{carconfig.engine}}</h3>
-            <h3>传动系配件:{{carconfig.transmission}}</h3>
-            <h3>转向系配件:{{carconfig.steering}}</h3>
-            <h3>汽车内饰:{{carconfig.carInterior}}</h3>
-            <h3>汽车外饰:{{carconfig.carTrim}}</h3>
-        </div>
-    </Modal>
+        <%--弹框消息:增加弹框代码--%>
+        <Modal v-model="lookFlag" title="查看车辆信息" :styles="{top: '40px'}">
+            <h2 style="width: 100px">车辆信息</h2>
+            <div style="margin-left: 10px;display: inline-block;width: 200px;">
+                <h3>车牌号:{{car.carNumber}}</h3>
+                <h3>车型:{{car.carType}}</h3>
+                <h3>车辆颜色:{{car.carColor}}</h3>
+                <h3>车辆价格:{{car.carNumber}}</h3>
+                <h3>介绍:{{car.carDemp}}</h3>
+                <h3>租赁价格:{{car.rentprice}}</h3>
+                <h3>租赁押金:{{car.deposit}}</h3>
+            </div>
+            <div style="float: right;display: inline-block;width: 250px;">
+                <img :src="car.carImg" title="车辆图片" width="150" >
+            </div>
+            <h2 style="width: 100px">车辆配置</h2>
+            <div style="margin-left: 10px;display: inline-block">
+                <h3>发动机配件:{{carconfig.engine}}</h3>
+                <h3>传动系配件:{{carconfig.transmission}}</h3>
+                <h3>转向系配件:{{carconfig.steering}}</h3>
+                <h3>汽车内饰:{{carconfig.carInterior}}</h3>
+                <h3>汽车外饰:{{carconfig.carTrim}}</h3>
+            </div>
+        </Modal>
     <%--弹框消息:增加弹框代码--%>
     <Modal v-model="addFlag" title="添加车辆信息" @on-ok="doAdd">
         <i-form inline :label-width="60">
@@ -203,17 +201,16 @@
             },
             //添加弹框
             addFlag:false,
-            //修改弹框
-            updateFlag:false,
             //详细信息查看弹框
             lookFlag:false,
+            //修改弹框
+            updateFlag:false,
             //添加存放
             car:{},
             //图片预览功能的实现
             img:null,
             //车辆详细信息
             carconfig:{},
-
 
         },
         mounted(){
@@ -229,7 +226,6 @@
                     .then(({data})=>{
                         // console.log(data);
                         this.pageResult=data.result;
-                        console.log(this.pageResult);
                         // console.log(this.pageResult.total);
                     })
             },
@@ -308,27 +304,6 @@
                     });
                 this.lookFlag=true;
             }
-
-
-
-
-
-
-
-
-            <%--//提交工作照数据保存数据库--%>
-            <%--updateAttach(){--%>
-                <%--console.log(this.uploadForm);--%>
-                <%--axios.post(`${ctx}/sys/user/updateAttach`,this.uploadForm)--%>
-                    <%--.then(({data})=>{--%>
-                        <%--this.uploadFlag=false;--%>
-                        <%--iview.Message.success(data.msg);--%>
-                        <%--this.searchUserPage();--%>
-                    <%--});--%>
-            <%--}--%>
-
-
-
 
 
         }

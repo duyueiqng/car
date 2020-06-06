@@ -61,7 +61,7 @@ public interface UserService extends IService<User> {
      * @param idCard
      * @return
      */
-    public User getUserByCard(String idCard);
+    User getUserByCard(String idCard);
 
     /**
      * 注册
@@ -82,4 +82,10 @@ public interface UserService extends IService<User> {
      * @return
      */
     boolean getUserByUserCode(String usercode);
+
+    /**
+     * 修改密码
+     * @param pwdOld
+     */
+    void updatePwd( String pwdOld,Integer userid);
 }

@@ -79,4 +79,11 @@ public class CarServiceImpl implements CarService {
         queryWrapper.eq(Car::getCarNumber,carNumber);
         return carMapper.selectOne(queryWrapper);
     }
+
+    @Override
+    public List<Car> selectByListByFree(String isFree) {
+        LambdaQueryWrapper<Car> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(Car::getIsFree,isFree);
+        return carMapper.selectList(queryWrapper);
+    }
 }
