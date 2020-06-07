@@ -46,10 +46,10 @@
         </template>
         <template slot-scope="{row,index}" slot="action">
             <shiro:hasPermission name="user:update">
-                <i-button type="warning" @click="toUpdate(row)"  size="small" title="修改" ><Icon type="ios-create-outline" /></i-button>
+                <i-button type="warning" @click="toUpdate(row)"  size="small" title="修改"><Icon type="ios-create-outline" /></i-button>
             </shiro:hasPermission>
             <shiro:hasPermission name="user:del">
-                <i-button type="error" @click="del(row)" size="small"  title="删除" ><Icon type="md-trash" /></i-button>
+                <i-button type="error" @click="del(row)" size="small"  title="删除"><Icon type="md-trash" /></i-button>
             </shiro:hasPermission>
         </template>
 

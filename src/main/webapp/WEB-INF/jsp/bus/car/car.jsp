@@ -39,7 +39,7 @@
     </card>
     <i-table :columns="myColumns" :data="pageResult.rows" border stripe :height="400">
         <template slot-scope="{row}" slot="isFree" >
-            <span>{{row.isFree==1?"空闲":"出租"}}</span>
+            <span>{{row.isFree==1?"出租":"空闲"}}</span>
         </template>
         <template slot-scope="{row}" slot="carImg" >
             <img :src="row.carImg" alt="" width="50">

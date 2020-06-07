@@ -106,7 +106,7 @@
                 //get提交方法携带参数的方法{params:this.userVo}
                 axios.get(`${ctx}/sys/user/getUserByCard?idCard=${this.idCard}`)
                     .then(({data})=>{
-                        iview.Message.success({content:data.result});
+                        iview.Message.success({content:"查询成功"});
                         if (data.code!=5000){
                             this.$refs.rentCard.style.display="block";
                             this.searchCarList();
@@ -129,7 +129,7 @@
                     })
             },
             searchCarList(){
-                axios.get(`${ctx}/sys/car/freelist`,{params:{isFree:1}})
+                axios.get(`${ctx}/sys/car/freelist`,{params:{isFree:0}})
                     .then(({data})=>{
                         this.carList=data;
                     })
