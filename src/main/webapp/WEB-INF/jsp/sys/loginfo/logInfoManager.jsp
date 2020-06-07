@@ -38,7 +38,7 @@
             <i-button type="success" @click="toBatchDel">批量删除</i-button>
         <%--</shiro:hasPermission>--%>
     </card>
-    <i-table  border stripe :columns="myColumns" :data="myData" @on-selection-change="tableSelection=arguments[0]">
+    <i-table  border stripe :columns="myColumns" :data="myData" @on-selection-change="tableSelection=arguments[0]" :height="380">
         <template slot-scope="{row,index}" slot="action">
             <%--<shiro:hasPermission name="role:del">--%>
                 <i-button type="error"  @click="del(row)" >刪除</i-button>

@@ -1,10 +1,8 @@
 package com.zy.controller;
 
-import com.zy.pojo.Renttable;
 import com.zy.pojo.User;
 import com.zy.service.RentService;
 import com.zy.service.UserService;
-import com.zy.utils.MailUtils;
 import com.zy.vo.PageResult;
 import com.zy.vo.ResultVo;
 import com.zy.vo.UserVo;
@@ -12,7 +10,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
-import javax.mail.MessagingException;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import java.io.File;
@@ -47,7 +44,6 @@ public class UserController extends BaseController{
                 //存在未完成的订单
                 msg="您还有未完成的订单";
             }else{
-                msg="查询成功";
                 return ResultVo.success(user);
             }
         }else{
