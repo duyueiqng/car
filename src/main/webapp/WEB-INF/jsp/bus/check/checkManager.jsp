@@ -59,7 +59,7 @@
                 editCheckUserId:'',
                 editRentId:'',
                 editCheckDate:'',
-                editType:false,//false:add,true:update
+                editType:true,//   false:add,  true:update
             },
             checktable:'',
             myColumns:[
@@ -107,6 +107,7 @@
                 },
                 {key:"checkUserId",title:"检查者",
                     render(h,{row,index}){
+                    console.log(_this.editObj.editType)
                         if(index==_this.editObj.editIndex&&_this.editObj.editType==false){
                             let vNodes=[h("i-input",{props:{value:_this.editObj.editCheckUserId},on:{
                                     input:(val)=>{
@@ -177,13 +178,13 @@
                                         row.field = _this.editObj.editName;
                                         row.problem = _this.editObj.editProblem ;
                                         row.paying = _this.editObj.editPaying ;
-                                        if(_this.editObj.editCheckDate!=null){
+                                        if(_this.editObj.editCheckDat==null){
                                             row.checkDate=_this.editObj.editCheckDate
                                         }
-                                        if(_this.editObj.editCheckUserId!=null){
+                                        if(_this.editObj.editCheckUserId==null){
                                             row.checkUserId=_this.editObj.editCheckUserId
                                         }
-                                        if(_this.editObj.editRentId!=null){
+                                        if(_this.editObj.editRentId==null){
                                             row.rentId=_this.editObj.editRentId
                                         }
                                         _this.checktable = row;

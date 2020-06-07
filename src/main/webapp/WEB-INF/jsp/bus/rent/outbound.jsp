@@ -8,7 +8,7 @@
 <body>
 <p>当前位置 : 业务管理 / 汽车出库 </p>
 <div id="root">
-    <card >
+    <card>
         <i-form inline :label-width="60" style="margin-left: 300px">
             <form-item label="身份证号">
                 <i-Input v-model="idCard"/>
@@ -106,8 +106,14 @@
                 //get提交方法携带参数的方法{params:this.userVo}
                 axios.get(`${ctx}/sys/user/getUserByCard?idCard=${this.idCard}`)
                     .then(({data})=>{
-                        iview.Message.success({content:"查询成功"});
+
+
                         if (data.code!=5000){
+                            iview.Message.success({content:data.result});
+
+
+                        }else{
+                            iview.Message.success({content:"查询成功"});
                             this.$refs.rentCard.style.display="block";
                             this.searchCarList();
                         }

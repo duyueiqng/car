@@ -56,7 +56,8 @@ public class CarServiceImpl implements CarService {
      */
     @Override
     public void doAdd(Car car) {
-        carMapper.insert(car);
+        int insert = carMapper.insert(car);
+        System.out.println("insert车辆---"+insert);
     }
 
     /**

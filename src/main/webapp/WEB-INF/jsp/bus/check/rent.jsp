@@ -40,7 +40,7 @@
             </span>
             <span v-else>
                 <i-button type="error" @click="toUpdate(row)" >编辑</i-button>
-                <i-button type="error" @click="del(row)" >刪除</i-button>
+                <%--<i-button type="error" @click="del(row)" >刪除</i-button>--%>
             </span>
         </template>
     </i-table>

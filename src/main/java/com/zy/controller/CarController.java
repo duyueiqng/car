@@ -65,7 +65,7 @@ public class CarController {
             carService.doAdd(car);
             return ResultVo.success(msg);
         }catch (Exception e){
-            return ResultVo.success(msg);
+            return ResultVo.faile(msg);
         }
 
     }

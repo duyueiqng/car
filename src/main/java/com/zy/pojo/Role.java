@@ -2,6 +2,7 @@ package com.zy.pojo;
 
 
 import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
@@ -44,4 +45,10 @@ public class Role {
      */
     @TableField(exist = false)
 	private List<User> userList;
+
+	/**
+	 * 逻辑删除标识 0 未删除  1 已删除
+	 */
+	@TableLogic
+	private Integer deleted;
 }

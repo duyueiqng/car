@@ -50,13 +50,13 @@
             text-align: center;
         }
         .bg{
-            z-index: 19891014;
-            opacity: 0.1;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            position: fixed;
+            /*z-index: 19891014;*/
+            /*opacity: 0.1;*/
+            /*top: 0;*/
+            /*left: 0;*/
+            /*width: 100%;*/
+            /*height: 100%;*/
+            /*position: fixed;*/
             pointer-events: auto;
         }
         .loginbox {
@@ -73,11 +73,22 @@
             position: fixed;
             padding: 40px;
         }
+        .modal-backdrop{
+            position: fixed;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            z-index: 19891014;
+            background-color:black;
+            opacity: 0.75;
+            display: none;
+        }
     </style>
 </head>
 <body>
 <div id="root" >
-    <div class="layout" class="bg"  ref="bg" >
+    <div class="layout" class="bg"   >
         <Layout>
             <Header>
                 <i-Menu mode="horizontal" theme="dark" active-name="1">
@@ -133,7 +144,7 @@
                 </sider>
                 <Layout :style="{padding: '0 24px 24px'}">
                     <i-Content :style="{minHeight: '500px', background: '#fff'}">
-                        <iframe name="main" width="1300px" height="600px" frameborder="0" src="/car/sys/menu/welcome/index"></iframe>
+                        <iframe name="main" width="100%" height="650px" frameborder="0" src="/car/sys/menu/welcome/index"></iframe>
                     </i-Content>
                 </Layout>
             </Layout>
@@ -153,6 +164,7 @@
         </i-form>
         <p style="color: red">请输入“123456”，否则不会解锁成功哦！！</p>
     </div>
+    <div class="modal-backdrop" ref="bg"></div>
 </div>
 
 
@@ -189,15 +201,16 @@
             },
             offScreen(){
                 this.$refs.lockcmsFlag.style.display="block";
-                this.$refs.bg.style.zIndex="19891014";
-                this.$refs.bg.style.backgroundColor="black";
-                this.$refs.bg.style.opacity="0.4";
+                // this.$refs.bg.style.zIndex="19891014";
+                this.$refs.bg.style.display="block";
+                // this.$refs.bg.style.opacity="0.4";
                 // this.$refs.bg.style.position="absolute";
             },
             close(){
                 if(this.pwd==="123456"){
                     this.$refs.lockcmsFlag.style.display="none";
-                    this.$refs.bg.style.opacity="1";
+                    this.$refs.bg.style.display="none";
+                    this.pwd="";
                 }else{
                     this.msg="屏幕密码错误";
                 }

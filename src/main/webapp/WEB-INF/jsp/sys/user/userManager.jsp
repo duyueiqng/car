@@ -6,14 +6,14 @@
     <%@include file="/common/head.jsp"%>
 </head>
 <body>
-<p>当前位置 : 基础管理 / 客户管理 </p>
+<p>当前位置 : 基础管理 / 用户管理 </p>
 <div id="root">
     <Collapse value="search">
         <Panel name="search">
             条件查询
             <p slot="content">
                 <i-form  inline :label-width="80">
-                    <form-item label="客户姓名:" >
+                    <form-item label="用户姓名:" >
                         <i-input type="text" v-model="userVo.username" />
                     </form-item>
                     <form-item label="身份信息:" >
@@ -59,7 +59,7 @@
             </shiro:hasPermission>
         </template>
     </i-table>
-    <modal v-model="graideFlag" title="角色授权" @on-ok="graint">
+    <modal v-model="graideFlag" title="角色授权" >
         <card>
             授权对象:&nbsp;&nbsp;&nbsp;
         </card>
@@ -72,7 +72,7 @@
 
     <%--弹框消息:增加弹框代码--%>
     <Modal v-model="addFlag" title="增加客户信息" @on-ok="doAdd">
-        <i-form :model="forItem" inline :label-width="60">
+        <i-form  inline :label-width="60">
             <form-item label="编号">
                 <i-input v-model="user.usercode"/>
             </form-item>
@@ -123,7 +123,7 @@
 
     <%--弹框消息:修改弹框代码--%>
     <Modal v-model="updateFlag" title="修改客户信息" @on-ok="doUpdate">
-        <i-form :model="forItem" inline :label-width="60">
+        <i-form  inline :label-width="60">
             <form-item label="编号">
                 <i-input v-model="user.usercode"/>
             </form-item>

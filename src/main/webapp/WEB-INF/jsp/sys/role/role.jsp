@@ -46,7 +46,7 @@
             <form-item label="角色名称">
                 <i-input v-model="role.roleName" size="large"/>
             </form-item>
-            <form-item label="修改时间">
+            <form-item label="创建时间">
                 <date-picker type="datetime" size="large" format="yyyy-MM-dd HH:mm" v-model="role.createdate" @on-change="role.createdate=$event"/>
             </form-item>
         </i-form>
@@ -66,7 +66,7 @@
                 {title:"角色名称",key:"roleName"},
                 {title:"角色代号",key:"roleCode"},
                 {title:"创建时间",key:"createdate"},
-                {title:"修改时间",key:"modifyDate"},
+                // {title:"修改时间",key:"modifyDate"},
                 {title:"操作",slot:"action"},
             ],
             myData:[],

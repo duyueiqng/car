@@ -24,6 +24,11 @@ public class MyBatisPlusConfig {
     public AutoMapper autoMapper(@Autowired(required=false) ApplicationContext applicationContext) {
         return new AutoMapper(applicationContext, new String[] { "com.zy.pojo" }); //配置ApplicationContext及实体类所在包
     }
+    //逻辑删除
+//    @Bean 3.1.1后不需要此配置
+//    public ISqlInjector iSqlInjector(){
+//        return new LogicSqlInjector
+//    }
 
 
 }
