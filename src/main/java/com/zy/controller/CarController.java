@@ -57,7 +57,9 @@ public class CarController {
     //添加新车辆
     @PostMapping("/doAdd")
     public ResultVo doAdd(@RequestBody Car car){
-        car.setIsFree(1);
+        car.setIsFree(0);
+        car.setDeleted(0);
+//        car.setVin("123456789");
         System.out.println("请求添加的车俩:"+car.getCarNumber());
         String msg = "添加新车辆失败!";
         try {
@@ -113,6 +115,23 @@ public class CarController {
             return ResultVo.success(e);
         }
     }
+
+    //车辆详细信息的添加
+    @PostMapping("/doAddCar")
+    public ResultVo doAddCar(@RequestBody CarConfig carConfig){
+        System.out.println(carConfig.toString());
+        String msg="添加失败!";
+        try {
+//            carConfigService.insert(carConfig);
+            msg="添加成功!";
+            return ResultVo.success(msg);
+        }catch (Exception e){
+            System.out.println(e);
+            return ResultVo.success(msg);
+        }
+
+    }
+
 
 
 

@@ -68,5 +68,10 @@ public class Car {
 	 */
 	private String vin;
 
+	/**
+	 * 删除字段
+	 */
+	private Integer deleted;
+
 
 }

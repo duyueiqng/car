@@ -63,7 +63,7 @@
         <%--弹框消息:增加弹框代码--%>
         <Modal v-model="lookFlag" title="查看车辆信息" :styles="{top: '40px'}">
             <h2 style="width: 100px">车辆信息</h2>
-            <div style="margin-left: 10px;display: inline-block;width: 200px;">
+            <div style="margin-left: 10px;display: inline-block;width: 210px;">
                 <h3>车牌号:{{car.carNumber}}</h3>
                 <h3>车型:{{car.carType}}</h3>
                 <h3>车辆颜色:{{car.carColor}}</h3>
@@ -71,21 +71,27 @@
                 <h3>介绍:{{car.carDemp}}</h3>
                 <h3>租赁价格:{{car.rentprice}}</h3>
                 <h3>租赁押金:{{car.deposit}}</h3>
+                <h3>车辆标识:{{car.vin}}</h3>
             </div>
             <div style="float: right;display: inline-block;width: 250px;">
                 <img :src="car.carImg" title="车辆图片" width="150" >
             </div>
             <h2 style="width: 100px">车辆配置</h2>
-            <div style="margin-left: 10px;display: inline-block">
-                <h3>发动机配件:{{carconfig.engine}}</h3>
-                <h3>传动系配件:{{carconfig.transmission}}</h3>
-                <h3>转向系配件:{{carconfig.steering}}</h3>
-                <h3>汽车内饰:{{carconfig.carInterior}}</h3>
-                <h3>汽车外饰:{{carconfig.carTrim}}</h3>
+            <div v-if="carConfig.id==null" >
+                <h3>车辆信息未填写!<i-button type="success" @click="addCar" size="small">填写</i-button></h3>
+            </div>
+
+            <div v-else style="margin-left: 10px;display: inline-block">
+                <h3>车辆标识:{{carConfig.id}}</h3>
+                <h3>发动机配件:{{carConfig.engine}}</h3>
+                <h3>传动系配件:{{carConfig.transmission}}</h3>
+                <h3>转向系配件:{{carConfig.steering}}</h3>
+                <h3>汽车内饰:{{carConfig.carInterior}}</h3>
+                <h3>汽车外饰:{{carConfig.carTrim}}</h3>
             </div>
         </Modal>
     <%--弹框消息:增加弹框代码--%>
-    <Modal v-model="addFlag" title="添加车辆信息" @on-ok="doAdd">
+    <Modal v-model="addFlag" title="添加车辆" @on-ok="doAdd">
         <i-form inline :label-width="60">
             <form-item label="车牌号">
                 <i-input v-model="car.carNumber"/>
@@ -113,6 +119,9 @@
                     <i-button icon="ios-cloud-upload-outline">请选择...</i-button>
                 </Upload>
                 <div class="img" :style="{'background-image': 'url(' + img +')'}" v-if="img"></div>
+            </form-item>
+            <form-item label="车辆标识:" :label-width="65">
+                <i-input v-model="car.vin"/>
             </form-item>
             <form-item label="创建日期">
                 <Date-Picker v-model="car.createtime" type="datetime" format="yyyy-MM-dd HH:mm"  @on-change="car.createtime=$event"></Date-Picker>
@@ -122,7 +131,7 @@
     </Modal>
 
     <%--弹框消息:修改弹框代码--%>
-    <Modal v-model="updateFlag" title="修改车辆信息" @on-ok="doUpdate">
+    <Modal v-model="updateFlag" title="修改车辆" @on-ok="doUpdate">
         <i-form inline :label-width="60">
             <form-item label="车牌号">
                 <i-input v-model="car.carNumber"/>
@@ -154,9 +163,37 @@
         </i-form>
     </Modal>
 
+        <%--弹框消息:增加弹框代码--%>
+        <Modal v-model="addCarFlag" title="添加车辆信息" @on-ok="doAddCar" :styles="{top: '20px'}" :width="350">
+            <i-form inline :label-width="100">
+                <form-item label="车辆标识:">
+                    <i-input disabled v-model="carConfig.id"/>
+                </form-item>
+                <form-item label="发动机配件:">
+                    <i-input v-model="carConfig.engine"/>
+                </form-item>
+                <form-item label="传动系配件:">
+                    <i-input v-model="carConfig.transmission"/>
+                </form-item>
+                <form-item label="转向系配件:">
+                    <i-input v-model="carConfig.carInterior"/>
+                </form-item>
+                <form-item label="汽车内饰:">
+                    <i-input v-model="carConfig.carTrim"/>
+                </form-item>
+                <form-item label="汽车外饰:">
+                    <i-input v-model="carConfig.steering"/>
+                </form-item>
+            </i-form>
+            </i-form>
+        </Modal>
 
 
-<%--分页标签::total表示页面数据总条数,:current.sync为点击页码自动改变页码,@on-change点击页码改变执行的方法--%>
+
+
+
+
+    <%--分页标签::total表示页面数据总条数,:current.sync为点击页码自动改变页码,@on-change点击页码改变执行的方法--%>
     <%--show-sizer显示修改页面容量按钮,:page-size要改变的参数,:page-size-opts自定义页面容量,@on-page-size-change页面容量改变执行的方法--%>
     <Page :total="pageResult.total"
           :current.sync="pageNo"
@@ -210,7 +247,8 @@
             //图片预览功能的实现
             img:null,
             //车辆详细信息
-            carconfig:{},
+            carConfig:{},
+            addCarFlag:false,
 
         },
         mounted(){
@@ -299,10 +337,25 @@
                 console.log(row.vin);
                 axios.get(`${ctx}/sys/car/look?vin=${row.vin}`)
                     .then(({data})=>{
-                        this.carconfig=data.result;
-                        console.log(this.carconfig);
+                        this.carConfig=data.result;
+                        console.log(this.carConfig);
                     });
                 this.lookFlag=true;
+            },
+
+            addCar(){
+                this.carConfig={};
+                this.carConfig.id=this.car.vin;
+                this.addCarFlag=true;
+            },
+            doAddCar(){
+                console.log(this.carConfig);
+                axios.post(`${ctx}/sys/car/doAddCar`,this.carConfig)
+                    .then(({data})=>{
+                        //接收返回添加成功或者添加失败的返回值
+                        iview.Message.success({content:data.msg});
+                    })
+
             }
 
 
