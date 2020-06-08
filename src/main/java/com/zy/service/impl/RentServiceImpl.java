@@ -27,7 +27,9 @@ public class RentServiceImpl implements RentService {
         LambdaQueryWrapper<Renttable> query=new LambdaQueryWrapper<>();
         //进行判断条件查询的条件是否为空
         query.eq(!StringUtils.isEmpty(renttable.getId()),Renttable::getId,renttable.getId())
-                .eq(!StringUtils.isEmpty(renttable.getRentflag()),Renttable::getRentflag,renttable.getRentflag());
+                .eq(!StringUtils.isEmpty(renttable.getRentflag()),Renttable::getRentflag,renttable.getRentflag())
+                .eq(!StringUtils.isEmpty(renttable.getCustId()),Renttable::getCustId,renttable.getCustId())
+                .eq(!StringUtils.isEmpty(renttable.getUserId()),Renttable::getUserId,renttable.getUserId());
 
 
         //封装分页查询

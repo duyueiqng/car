@@ -168,7 +168,9 @@
             //归还弹框显示
             toReturn(row){
                 //违规信息显示
+
                 this.checktable.rentId=row.id;
+                console.log(this.checktable.rentId)
                 axios.get(`${ctx}/sys/checktable/select`,{params:this.checktable})
                     .then(({data})=>{
                         console.log(data);
@@ -207,7 +209,8 @@
                         clearTimeout(this.timer);  //清除延迟执行
                         this.timer = setTimeout(()=>{   //设置延迟执行
                             location. reload()
-                        },1000);
+                        },3000);
+                        window.location.href="${ctx}/bus/check/rent/index"
                     });
 
 

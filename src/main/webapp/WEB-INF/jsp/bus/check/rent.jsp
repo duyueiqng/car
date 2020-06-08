@@ -4,6 +4,21 @@
 <head>
     <title>员工管理</title>
     <%@include file="/common/head.jsp"%>
+    <style>
+        .left{
+            text-align: right;
+            vertical-align: middle;
+            float: left;
+            font-size: 12px;
+            color: #515a6e;
+            line-height: 1;
+            padding: 10px 12px 10px 0;
+            box-sizing: border-box;
+        }
+        .right{
+            font-size: 14px;
+        }
+    </style>
 </head>
 <body>
 <p>当前位置 : 业务管理 / 租赁单据 </p>
@@ -18,7 +33,16 @@
                         <i-input type="text" v-model="renttable.id" />
                     </form-item>
                     <form-item label="状态" >
-                        <i-input type="text" v-model="renttable.rentflag" />
+                        <i-Select  v-model="renttable.rentflag" style="width:200px" placeholder="请选择">
+                            <i-Option  value="1" >出租中</i-Option>
+                            <i-Option  value="2" >已完成</i-Option>
+                        </i-Select>
+                    </form-item>
+                    <form-item label="用户" >
+                        <i-input type="text" v-model="renttable.custId" />
+                    </form-item>
+                    <form-item label="操作人" >
+                        <i-input type="text" v-model="renttable.userId" />
                     </form-item>
                     <form-item>
                         <%--点击搜索为了页码不出错,需要在条件查询时确保页码为1--%>
@@ -37,9 +61,11 @@
         <template slot-scope="{row,index}" slot="action">
             <span v-if="row.rentflag!=1">
                 <i-button type="warning" @click="exportExcel(row)" >打印出租单</i-button>
+                <i-button type="primary" @click="toCheck(row)" >查看检查单</i-button>
             </span>
             <span v-else>
                 <i-button type="error" @click="toUpdate(row)" >编辑</i-button>
+                <i-button type="primary" @click="toCheck(row)" >生成检查单</i-button>
                 <%--<i-button type="error" @click="del(row)" >刪除</i-button>--%>
             </span>
         </template>
@@ -77,6 +103,131 @@
                 <i-input v-model="rent.userId"/>
             </form-item>
         </i-form>
+    </Modal>
+    <%--弹框消息:生成检查单--%>
+    <Modal v-model="addFlag" title="增加检查单" @on-ok="doAddCheck">
+        <i-form inline :label-width="60">
+            <form-item label="评价">
+                <i-input v-model="checktable.field"/>
+            </form-item>
+            <form-item label="问题">
+                <i-input v-model="checktable.problem"/>
+            </form-item>
+            <form-item label="赔偿金额">
+                <i-input v-model="checktable.paying"/>
+            </form-item>
+            <form-item label="检查时间">
+                <Date-Picker :value="checktable.checkDate" type="datetime" format="yyyy-MM-dd HH:mm" @on-change="checktable.checkDate=$event" ></Date-Picker>
+            </form-item>
+            <form-item label="操作员">
+                <i-input v-model="checktable.checkUserId"/>
+            </form-item>
+            <form-item label="出租Id">
+                <i-input v-model="checktable.rentId"/>
+            </form-item>
+        </i-form>
+    </Modal>
+    <Modal v-model="showFlag" title="检查单">
+        <Row :gutter="16">
+            <i-col span="6">
+                <div>&nbsp;&nbsp;</div>
+            </i-col>
+            <i-col span="6">
+                <div class="left">检查单号</div>
+            </i-col>
+            <i-col span="6">
+                <div>{{checktable.checkId}}</div>
+            </i-col>
+            <i-col span="6">
+                <div>&nbsp;&nbsp;</div>
+            </i-col>
+        </Row>
+        <Row :gutter="16">
+            <i-col span="6">
+                <div>&nbsp;&nbsp;</div>
+            </i-col>
+            <i-col span="6">
+                <div class="left">评价</div>
+            </i-col>
+            <i-col span="6">
+                <div>{{checktable.field}}</div>
+            </i-col>
+            <i-col span="6">
+                <div>&nbsp;&nbsp;</div>
+            </i-col>
+        </Row>
+        <Row :gutter="16">
+            <i-col span="6">
+                <div>&nbsp;&nbsp;</div>
+            </i-col>
+            <i-col span="6">
+                <div class="left">问题</div>
+            </i-col>
+            <i-col span="6">
+                <div>{{checktable.problem}}</div>
+            </i-col>
+            <i-col span="6">
+                <div>&nbsp;&nbsp;</div>
+            </i-col>
+        </Row>
+        <Row :gutter="16">
+            <i-col span="6">
+                <div>&nbsp;&nbsp;</div>
+            </i-col>
+            <i-col span="6">
+                <div class="left">赔偿金额</div>
+            </i-col>
+            <i-col span="6">
+                <div>{{checktable.paying}}</div>
+            </i-col>
+            <i-col span="6">
+                <div>&nbsp;&nbsp;</div>
+            </i-col>
+        </Row>
+        <Row :gutter="16">
+            <i-col span="6">
+                <div>&nbsp;&nbsp;</div>
+            </i-col>
+            <i-col span="6">
+                <div class="left">检查时间</div>
+            </i-col>
+            <i-col span="6">
+                <div>{{checktable.checkDate}}</div>
+            </i-col>
+            <i-col span="6">
+                <div>&nbsp;&nbsp;</div>
+            </i-col>
+        </Row>
+        <Row :gutter="16">
+            <i-col span="6">
+                <div>&nbsp;&nbsp;</div>
+            </i-col>
+            <i-col span="6">
+                <div class="left">操作员</div>
+            </i-col>
+            <i-col span="6">
+                <div>{{checktable.checkUserId}}</div>
+            </i-col>
+            <i-col span="6">
+                <div>&nbsp;&nbsp;</div>
+            </i-col>
+        </Row>
+        <Row :gutter="16">
+            <i-col span="6">
+                <div>&nbsp;&nbsp;</div>
+            </i-col>
+            <i-col span="6">
+                <div class="left">出租Id</div>
+            </i-col>
+            <i-col span="6">
+                <div>{{checktable.rentId}}</div>
+            </i-col>
+            <i-col span="6">
+                <div>&nbsp;&nbsp;</div>
+            </i-col>
+        </Row>
+
+
     </Modal>
 
 
@@ -129,10 +280,12 @@
             //修改弹框
             updateFlag:false,
             //添加存放
-            car:{},
             rent:{},
             //图片预览功能的实现
             img:null,
+            checktable:{},
+            dyId:'',
+            showFlag:false,//展示检查单信息
 
 
         },
@@ -152,34 +305,47 @@
                         // console.log(this.pageResult.total);
                     })
             },
-            //添加准备
-            toAdd(){
-                //帮助表单输入初始化
-                this.car = {};
-                this.addFlag=true;
-            },
-            //添加车辆
-            doAdd(){
-                console.log(this.car);
-                axios.post(`${ctx}/sys/car/doAdd`,this.car)
-                    .then(({data})=>{
-                        //接收返回添加成功或者添加失败的返回值
-                        iview.Message.success({content:data.msg});
-                        //刷新数据
-                        this.searchUserPage();
-                    })
-            },
             //修改准备
             toUpdate(row){
                 //这句表示这一条数据是点击的数据
                 this.rent = row;
-                console.log(this.car);
                 this.updateFlag=true;
             },
             //修改车辆
             doUpdate(row){
                 this.car.createtime=moment(this.car.createtime).format("yyyy-MM-dd HH:mm");
                 axios.post(`${ctx}/sys/car/doUpdate`,this.car)
+                    .then(({data})=>{
+                        iview.Message.success({content:data.msg});
+                        // this.search();//上面双向绑定可以省略
+                    })
+            },
+            toCheck(row){//生成检查单，先查看是否已经有检查单
+                //没有 弹出模态框，填写基本的检查信息
+                console.log(row)
+                // console.log(row.returnDate)
+                // console.log(row.rentflag)
+                if(row.returnDate==null&&row.rentflag==1){
+                    this.rent = row;
+                    this.checktable.rentId=this.rent.id
+                    this.checktable.deleted=0
+                    console.log(this.checktable)
+                    this.addFlag=true;
+
+                }else{//有 展示检查单
+
+                    this.checktable.rentId=row.id;
+                    axios.get(`${ctx}/sys/checktable/select`,{params:this.checktable})
+                        .then(({data})=>{
+                            this.checktable=data.result;
+                            this.showFlag=true;
+                        })
+                }
+
+                <%--window.location.href=`${ctx}/bus/check/checkManager/index`--%>
+            },
+            doAddCheck(){
+                axios.post(`${ctx}/sys/checktable/addChecked`,this.checktable)
                     .then(({data})=>{
                         iview.Message.success({content:data.msg});
                         // this.search();//上面双向绑定可以省略
@@ -195,7 +361,6 @@
                         console.log(row.id);
                         axios.get(`${ctx}/sys/car/del?id=${row.id}`)
                             .then(({data})=>{
-                                // this.addFlag = false;
                                 iview.Message.success({content:data});
                                 _this.searchUserPage();
                             })

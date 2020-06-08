@@ -54,4 +54,10 @@ public interface CarService {
      * @return
      */
     List<Car> selectByListByFree(String isFree);
+
+    /**
+     * 修改车辆状态
+     * @param carId
+     */
+    void updateStatus(String carId);
 }

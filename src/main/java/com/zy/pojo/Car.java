@@ -54,7 +54,7 @@ public class Car {
 	private String carImg;
 
 	/**
-	 * 状态 1 出租中 2 已完成
+	 * 状态 1 出租中 0 已完成
 	 */
 	private Integer isFree;
 
