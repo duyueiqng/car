@@ -209,8 +209,8 @@
                         clearTimeout(this.timer);  //清除延迟执行
                         this.timer = setTimeout(()=>{   //设置延迟执行
                             location. reload()
-                        },3000);
-                        window.location.href="${ctx}/bus/check/rent/index"
+                        },2000);
+                        <%--window.location.href="${ctx}/bus/check/rent/index"--%>
                     });
 
 

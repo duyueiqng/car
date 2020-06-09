@@ -45,6 +45,12 @@
                 <form-item label="车号">
                     <i-input v-model="renttable.carId" ref="carNum" @on-focus="findCar"/>
                 </form-item>
+                <form-item label="参与活动">
+                    <i-select  v-model="renttable.activityId" style="width:200px">
+                        <i-Option value="">---不限---</i-Option>
+                        <i-Option v-for="item in activitiyList" :value="item.id" :key="item.id">{{ item.activities }}</i-Option>
+                    </i-select>
+                </form-item>
                 <form-item label="用户号">
                     <i-input v-model="renttable.custId"/>
                 </form-item>
@@ -97,8 +103,13 @@
             carList:[],
             //选择的数据
             tableSelection:[],
+            //活动详细弹框
+            activityFlag:false,
+            //活动数据
+            activitiyList:[],
         },
         mounted(){
+            this.searchActivityList();
 
         },
         methods:{
@@ -164,6 +175,23 @@
             handleReset (name) {
                 this.$refs[name].resetFields();
             },
+
+
+
+            //活动相关
+
+            //查看活动信息
+            searchActivityList(){
+                axios.get(`${ctx}/sys/activitiy/list`)
+                    .then(({data})=>{
+                        this.activitiyList=data.result;
+                    })
+            }
+
+
+            // findActivities(){
+            //     this.activityFlag=true;
+            // }
         }
     });
 </script>

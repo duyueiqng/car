@@ -2,6 +2,7 @@ package com.zy.pojo;
 
 
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -75,5 +76,11 @@ public class Renttable {
 	 */
 	@TableLogic
 	private Integer deleted;
+
+	/**
+	 * 参与的活动
+	 */
+	@TableField(exist = false)
+	private Integer activityId;
 
 }
