@@ -38,4 +38,33 @@ public class Book {
 	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm")
 	@JsonFormat(pattern = "yyyy-MM-dd HH:mm")
 	private java.time.LocalDateTime endTime;
+
+	/**
+	 * 处理时间
+	 */
+	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm")
+	@JsonFormat(pattern = "yyyy-MM-dd HH:mm")
+	private java.time.LocalDateTime dealTime;
+
+	/**
+	 * 处理人
+	 */
+	private String userId;
+
+	/**
+	 * 处理结果 0 通过 1驳回
+	 */
+	private Integer result;
+
+	/**
+	 * 处理意见
+	 */
+	private String advise;
+
+
+	/**
+	 * 备注 用户是否已经知情结果
+	 */
+	private String remark;
+
 }

@@ -63,6 +63,7 @@
             tableSelection:[],
         },
         mounted(){
+            this.book.custId="${user.usercode}";
             this.searchCarList()
         },
         methods:{
