@@ -49,7 +49,7 @@ public class RentController {
             return ResultVo.success("汽车租赁成功!");
         }catch (Exception e){
             e.printStackTrace();
-            return ResultVo.faile("汽车租赁失败!");
+            return ResultVo.faile("汽车租赁失败!",e);
         }
     }
 

@@ -6,38 +6,38 @@
     <%@include file="/common/head.jsp"%>
     <style>
         .boxCrid{
-                margin: auto;
-                /*border: 1px solid red;*/
-                width: 60%;
-                height: 100%;
-                background-color: antiquewhite;
+            margin: auto;
+            /*border: 1px solid red;*/
+            width: 60%;
+            height: 100%;
+            background-color: antiquewhite;
         }
         .biaoti{
-                margin: auto;
-                text-align: center;
-                font-size: 24px;
-    }
+            margin: auto;
+            text-align: center;
+            font-size: 24px;
+        }
         .xinxi{
-                font-size: 18px;
-                color: darkgoldenrod;
-                padding-left: 80px;
-                padding-top: 20px;
+            font-size: 18px;
+            color: darkgoldenrod;
+            padding-left: 80px;
+            padding-top: 20px;
         }
     </style>
 </head>
-<body style="background-color: #dcdee2">
+<body>
 
 <div id="root">
     <div class="boxCrid"style="margin: auto">
-        <h3 class="biaoti" >个人信息</h3>
-    <div>
-        <Row :gutter="16">
-        <i-col span="6">
-        <div><img src="${user.attachPath}" width="200px" height="200px" style="margin-left: 280px"></div>
-        </i-col>
-        </Row>
-    </div>
-    <div class="xinxi">
+        <h3 class="biaoti">个人信息</h3>
+        <div>
+            <Row :gutter="16">
+                <i-col span="6">
+                    <div><img src="${user.attachPath}" width="200px" height="200px" style="margin-left: 280px"></div>
+                </i-col>
+            </Row>
+        </div>
+        <div class="xinxi">
         <Row :gutter="16">
             <i-col span="6">
                 <div>&nbsp;&nbsp;</div>

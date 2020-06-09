@@ -1,6 +1,7 @@
 package com.zy.pojo;
 
 
+import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
@@ -53,7 +54,7 @@ public class Car {
 	private String carImg;
 
 	/**
-	 * 状态 1 出租中 2 已完成
+	 * 状态 1 出租中 0 已完成
 	 */
 	private Integer isFree;
 
@@ -69,9 +70,9 @@ public class Car {
 	private String vin;
 
 	/**
-	 * 删除字段
+	 * 逻辑删除标识 0 未删除  1 已删除
 	 */
+	@TableLogic
 	private Integer deleted;
-
 
 }

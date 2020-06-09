@@ -122,7 +122,7 @@ public class CarController {
         System.out.println(carConfig.toString());
         String msg="添加失败!";
         try {
-//            carConfigService.insert(carConfig);
+            carConfigService.save(carConfig);
             msg="添加成功!";
             return ResultVo.success(msg);
         }catch (Exception e){

@@ -59,7 +59,7 @@
                 editCheckUserId:'',
                 editRentId:'',
                 editCheckDate:'',
-                editType:false,//false:add,true:update
+                editType:true,//   false:add,  true:update
             },
             checktable:'',
             myColumns:[
@@ -70,7 +70,7 @@
                                 input:(val)=>{
                                     _this.editObj.editName=val;
                                 }
-                            }})]
+                            }})];
                          return h("div",vNodes)
                      }else{
                          return h("div",row.field)
@@ -84,7 +84,7 @@
                                     input:(val)=>{
                                         _this.editObj.editProblem=val;
                                     }
-                                }})]
+                                }})];
                             return h("div",vNodes)
                         }else{
                             return h("div",row.problem)
@@ -98,7 +98,7 @@
                                     input:(val)=>{
                                         _this.editObj.editPaying=val;
                                     }
-                                }})]
+                                }})];
                             return h("div",vNodes)
                         }else{
                             return h("div",row.paying)
@@ -107,12 +107,13 @@
                 },
                 {key:"checkUserId",title:"检查者",
                     render(h,{row,index}){
+                    console.log(_this.editObj.editType);
                         if(index==_this.editObj.editIndex&&_this.editObj.editType==false){
                             let vNodes=[h("i-input",{props:{value:_this.editObj.editCheckUserId},on:{
                                     input:(val)=>{
                                         _this.editObj.editCheckUserId=val;
                                     }
-                                }})]
+                                }})];
                             return h("div",vNodes)
                         }else{
                             return h("div",row.checkUserId)
@@ -126,7 +127,7 @@
                                     'on-change': (val) => {
                                         _this.editObj.editCheckDate = val;
                                     }
-                                }})]
+                                }})];
                             return h("div",vNodes)
                         }else{
                             return h("div",row.checkDate)
@@ -140,7 +141,7 @@
                                     input:(val)=>{
                                         _this.editObj.editRentId=val;
                                     }
-                                }})]
+                                }})];
                             return h("div",vNodes)
                         }else{
                             return h("div",row.rentId)
@@ -166,7 +167,7 @@
                                 click:()=>{
                                     _this.toDelete(row);
                                 }
-                            }}, "删除")
+                            }}, "删除");
                         return h("div", [update, del])
                     }else{
                         let ok = h("i-button",
@@ -177,13 +178,13 @@
                                         row.field = _this.editObj.editName;
                                         row.problem = _this.editObj.editProblem ;
                                         row.paying = _this.editObj.editPaying ;
-                                        if(_this.editObj.editCheckDate!=null){
+                                        if(_this.editObj.editCheckDat==null){
                                             row.checkDate=_this.editObj.editCheckDate
                                         }
-                                        if(_this.editObj.editCheckUserId!=null){
+                                        if(_this.editObj.editCheckUserId==null){
                                             row.checkUserId=_this.editObj.editCheckUserId
                                         }
-                                        if(_this.editObj.editRentId!=null){
+                                        if(_this.editObj.editRentId==null){
                                             row.rentId=_this.editObj.editRentId
                                         }
                                         _this.checktable = row;
@@ -200,7 +201,7 @@
                                 click:()=>{
                                     _this.editObj.editIndex = -1;
                                 }
-                            }}, "取消")
+                            }}, "取消");
                         return h("div", [ok, cancel])
                     }
                     }}
@@ -228,8 +229,8 @@
                     })
             },
             doAdd(){
-                var addObj = {}
-                Object.assign(addObj,_this.editObj)//复制editObj的属性到addObj
+                var addObj = {};
+                Object.assign(addObj,_this.editObj);//复制editObj的属性到addObj
                 _this.checkedList.push(addObj);
                 // _this.findIndex(function(value){//返回元素再数组中的编号
                 //     return value = addObj;

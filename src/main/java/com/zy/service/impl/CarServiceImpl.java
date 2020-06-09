@@ -56,7 +56,8 @@ public class CarServiceImpl implements CarService {
      */
     @Override
     public void doAdd(Car car) {
-        carMapper.insert(car);
+        int insert = carMapper.insert(car);
+        System.out.println("insert车辆---"+insert);
     }
 
     /**
@@ -85,5 +86,15 @@ public class CarServiceImpl implements CarService {
         LambdaQueryWrapper<Car> queryWrapper = new LambdaQueryWrapper<>();
         queryWrapper.eq(Car::getIsFree,isFree);
         return carMapper.selectList(queryWrapper);
+    }
+
+    @Override
+    public void updateStatus(String carId) {
+        LambdaQueryWrapper<Car> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(Car::getCarNumber,carId);
+        Car car = carMapper.selectOne(queryWrapper);
+        car.setCarNumber(carId);
+        car.setIsFree(1);
+        carMapper.updateById(car);
     }
 }
