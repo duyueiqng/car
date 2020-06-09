@@ -1,6 +1,8 @@
 package com.zy.pojo;
 
 
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.Data;
 
 @Data
@@ -9,6 +11,7 @@ public class CarConfig {
     /**
      * 主键
      */
+    @TableId(value = "id",type = IdType.INPUT )
     private String id;
 
     /**

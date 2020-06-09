@@ -2,6 +2,7 @@ package com.zy.controller;
 
 import com.zy.pojo.Car;
 import com.zy.pojo.Renttable;
+import com.zy.service.ActivitiyService;
 import com.zy.service.CarService;
 import com.zy.service.RentService;
 import com.zy.vo.PageResult;
@@ -25,6 +26,8 @@ public class RentController {
     @Resource
     private CarService carService;
 
+    @Resource
+    private ActivitiyService activitiyService;
 
     //采用result风格(查询全部,条件查询和分页查询)
     @GetMapping("/page/{pageNo}/{pageSize}")
@@ -46,6 +49,7 @@ public class RentController {
             carService.doUpdate(car);
             renttable.setId(UUID.randomUUID().toString());
             rentService.addRent(renttable);
+            activitiyService.updateByJian(renttable.getActivityId());
             return ResultVo.success("汽车租赁成功!");
         }catch (Exception e){
             e.printStackTrace();
